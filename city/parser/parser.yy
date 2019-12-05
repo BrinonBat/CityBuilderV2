@@ -7,7 +7,7 @@
 %define parse.assert
 
 %locations
-// hah ! gay
+
 %code requires{
     #include "contexte.hh"
     #include "expressionBinaire.hh"
