@@ -27,7 +27,7 @@ void Graphe::ajoutArc(int origine,int destination, int c){
   matrice[origine-1][destination-1] = c;
 }
 
-void Graphe::ajoutSommet(Maison const & m){
+void Graphe::ajoutSommet(std::shared_ptr<Maison> m){
   _sommets.push_back(m);
   nbSommet++;
 }

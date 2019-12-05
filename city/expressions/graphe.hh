@@ -17,7 +17,7 @@ class Graphe{
     int nbSommet;
     int rayon;
     bool oriente;
-    std::vector<Maison> _sommets;
+    std::vector<std::shared_ptr<Maison> > _sommets;
     
   public :
 
@@ -25,12 +25,15 @@ class Graphe{
     Graphe(int r);
     ~Graphe();
     void initMatrice();
-    int getnbSommet(int i) {return nbSommet;}
+
+    int getnbSommet()const {return nbSommet;}
+    int getRayon()const{return rayon;}
     void setOriente(bool o) {oriente = o;};
-    void ajoutSommet(Maison const &m);
+    void ajoutSommet(std::shared_ptr<Maison> m);
     void ajoutArc(int,int,int); 
     void affichageMatrice(); 
     void parcoursProfondeur();
     void explorer(int s);
     void parcoursLargeur();
 };
+using graphePtr = std::shared_ptr<Graphe>;

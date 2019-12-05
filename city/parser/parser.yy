@@ -15,6 +15,7 @@
     #include "constante.hh"
     #include "variable.hh"
     #include "graphe.hh"
+    #include "construction.hh"
 
     class Scanner;
     class Driver;
@@ -46,6 +47,7 @@
 %token                  com
 
 %type <int>             operation
+%type <coordonnee>      coordonnee
 %type<std::string>      traitement traitements
 %left '-' '+'
 %left '*' '/'
@@ -93,6 +95,7 @@ traitement:
          maison {
             //construire maison à un emplacement aléatoire
                 std::cout<<"Maison ok"<<std::endl;
+                Maison();
         }
         | maison  coordonnee {
             // construire maison selon coordonées
@@ -100,6 +103,7 @@ traitement:
         }
         | route coordonnee arrow coordonnee  {
             std::cout<<"Route "<<"->"<<std::endl;
+
         }
         | com {
             std::cout<<"Commentaire"<<std::endl;
@@ -109,8 +113,11 @@ traitement:
 
 coordonnee:
         '(' operation ',' operation ',' operation ')' {
-            std::cout<<" coordonnee ";
-                }
+            $$._x = $2;
+            $$._y = $4;
+            $$._z = $6;
+            std::cout<<"Coordonnée";
+            }
 
 operation:
     NUMBER {

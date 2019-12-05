@@ -20,7 +20,8 @@ int main( int  argc, char* argv[]) {
     g.affichageMatrice();
     coordonnee coo;
     coo._x=0;coo._y=0;coo._z=0;
-    g.ajoutSommet(Maison(coo));
+    Maison m(coo);
+    g.ajoutSommet(std::make_shared<Maison>(m));
     g.initMatrice();
     g.affichageMatrice();
 
