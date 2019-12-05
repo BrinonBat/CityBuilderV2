@@ -10,7 +10,7 @@
 
 int main( int  argc, char* argv[]) {
     Driver driver;
-    std::ifstream fichier("01.city");
+    std::ifstream fichier("../exemples/01.city");
 
     Scanner scanner(fichier, std::cout);
     yy::Parser parser(scanner, driver);
