@@ -7,7 +7,7 @@
 %define parse.assert
 
 %locations
-
+// hah ! gay
 %code requires{
     #include "contexte.hh"
     #include "expressionBinaire.hh"
@@ -27,7 +27,7 @@
 %code{
     #include <iostream>
     #include <string>
-    
+
     #include "scanner.hh"
     #include "driver.hh"
 
@@ -46,7 +46,7 @@
 %token                  com
 
 %type <int>             operation
-%type<std::string>      traitement traitements 
+%type<std::string>      traitement traitements
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -68,7 +68,7 @@ instruction:
         std::cout<<$4<<std::endl;
         std::cout<<"}"<<std::endl;
         Graphe g;
-        
+
     }
     | build '(' NUMBER ')' '{' NL traitements '}' {
         // creation graphe de taille resultat operation
@@ -77,7 +77,7 @@ instruction:
         std::cout<<$7<<std::endl;
         std::cout<<"}"<<std::endl;
         Graphe g;
-        
+
     }
 
 traitements:
