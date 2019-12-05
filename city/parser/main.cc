@@ -18,13 +18,14 @@ int main( int  argc, char* argv[]) {
     Graphe g;
     g.initMatrice();
     g.affichageMatrice();
-    coordonnee coo;
+    coordonnee coo,coor;
     coo._x=0;coo._y=0;coo._z=0;
-    Maison m(coo);
-    g.ajoutSommet(std::make_shared<Maison>(m));
-    g.initMatrice();
-    g.affichageMatrice();
-
+    coor._x = 1;
+    coor._z = 0;
+    coor._y = -coor._x - coor._z;
+    Maison m(coo);Maison m2(coor);
+    
+    
     parser.parse();
 
     return 0;

@@ -13,4 +13,7 @@ private:
 public:
     Maison(coordonnee c):_coord(c){}
     Maison();
+    coordonnee getCoord()const{return _coord;}
+    bool operator==(Maison const & m);
 };
+

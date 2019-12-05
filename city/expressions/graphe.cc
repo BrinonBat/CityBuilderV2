@@ -5,8 +5,6 @@
 
 Graphe::Graphe(): nbSommet(0), oriente(false){
 }
-Graphe::Graphe(int r): nbSommet(0),rayon(r), oriente(false){
-}
 Graphe::~Graphe(){
 
 }
@@ -27,10 +25,7 @@ void Graphe::ajoutArc(int origine,int destination, int c){
   matrice[origine-1][destination-1] = c;
 }
 
-void Graphe::ajoutSommet(std::shared_ptr<Maison> m){
-  _sommets.push_back(m);
-  nbSommet++;
-}
+
 void Graphe::affichageMatrice(){
   std::vector<int> largeurColonne;
 
@@ -63,11 +58,4 @@ void Graphe::affichageMatrice(){
   }
 }
 
-void Graphe::explorer(int s){
-  parcourus[s]=true;
-  std::cout << "S" << s+1 << " ";
-  for (int i=0;i<nbSommet;++i) {
-    if (!parcourus[i] and (matrice[s][i]!=0))
-      explorer(i);
-  }
-}
+
