@@ -2,7 +2,8 @@
 #include "construction.hh"
 #include "graphe.hh"
 #include <vector>
-
+//class qui contient les instruction de construction qui est lu dans le parser
+//elle contient le graphe/matrice d'adjacence et la liste des maisons
 class instruction{
 private:
     Graphe _graphe;
@@ -12,10 +13,12 @@ private:
 public:
     instruction():_nbsommet(0){};
     instruction(const instruction & autre)=default;
-
-    void setMaison( Maison const &  m);
+    
     bool estoccupe(coordonnee c);
-    void setMaison(Maison const &m,coordonnee c);
+    void ajoutMaison();
+    void ajoutMaison(coordonnee c);
+    void ajoutRoute(coordonnee src,coordonnee dst);
+    
 
     void exec();
 
