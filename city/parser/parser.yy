@@ -16,14 +16,16 @@
     #include "variable.hh"
     #include "graphe.hh"
     #include "construction.hh"
+    #include "instrution.hh"
 
     class Scanner;
     class Driver;
-    class Graphe;
+    class instruction;
 }
 
 %parse-param { Scanner &scanner }
 %parse-param { Driver &driver }
+%parse-param { instruction &ville }
 
 %code{
     #include <iostream>
@@ -69,7 +71,7 @@ instruction:
         std::cout<<"Construire {"<<std::endl;
         std::cout<<$4<<std::endl;
         std::cout<<"}"<<std::endl;
-        Graphe g;
+        ville.exec(5);
 
     }
     | build '(' NUMBER ')' '{' NL traitements '}' {
@@ -78,7 +80,7 @@ instruction:
         std::cout<<"Construire ("<<$3<<"){ test"<<std::endl;
         std::cout<<$7<<std::endl;
         std::cout<<"}"<<std::endl;
-        Graphe g;
+        ville.exec($3);
 
     }
 
@@ -95,14 +97,16 @@ traitement:
          maison {
             //construire maison à un emplacement aléatoire
                 std::cout<<"Maison ok"<<std::endl;
-                Maison();
+                ville.ajoutMaison();
         }
         | maison  coordonnee {
             // construire maison selon coordonées
                 std::cout<<"Maison cok"<<std::endl;
+                ville.ajoutMaison($2);
         }
         | route coordonnee arrow coordonnee  {
             std::cout<<"Route "<<"->"<<std::endl;
+            ville.ajoutRoute($2,$4);
 
         }
         | com {

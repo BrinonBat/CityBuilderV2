@@ -23,8 +23,11 @@ class Graphe{
     void initMatrice();
 
     int getnbSommet()const {return nbSommet;}
+    void setnbSommet(int n){nbSommet=n;}
     void setOriente(bool o) {oriente = o;};
-    void ajoutArc(int,int,int); 
+    std::array<std::array<int, Max>, Max> mat()const{return matrice;}
+        //void ajoutArc(int,int,int); pas utile comme ya pas de poids d'arc
+        void ajoutArc(int, int);
     void affichageMatrice(); 
     void parcoursProfondeur();
     void parcoursLargeur();

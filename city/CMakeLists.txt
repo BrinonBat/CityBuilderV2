@@ -23,6 +23,7 @@ file(GLOB EXPRESSION_HEADERS
     expressions/variable.hh
     expressions/graphe.hh
     expressions/construction.hh
+    expressions/instrution.hh
     )
 
 add_library(libexpressions 
@@ -33,6 +34,7 @@ add_library(libexpressions
     expressions/variable.cc
     expressions/graphe.cc
     expressions/construction.cc
+    expressions/instruction.cc
     ${EXPRESSION_HEADERS}
     )
 
