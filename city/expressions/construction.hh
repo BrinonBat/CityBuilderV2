@@ -21,5 +21,6 @@ public:
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
     bool operator==(Maison const & m);
+    void sortieflux(std::ostream & os)const;
 };
-
+std::ostream & operator<<(std::ostream & os,Maison const & m);

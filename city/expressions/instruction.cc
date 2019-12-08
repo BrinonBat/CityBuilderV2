@@ -24,6 +24,19 @@ void  instruction::ajoutMaison(coordonnee c){
     
 }
 
+void instruction::ajoutRoute(coordonnee src,coordonnee dst){
+    for(auto & i:_maisons){
+        if(i.getCoord==src){
+            i.ajoutRoute(dst);
+        }
+    }
+}
 
 
-void instruction::exec(){}
+
+void instruction::exec(int rayon){
+    _rayon=rayon;
+    for(auto const & i:_maisons){
+        
+    }
+}

@@ -7,7 +7,7 @@
 class instruction{
 private:
     Graphe _graphe;
-    int rayon;
+    int _rayon;
     int _nbsommet;
     std::vector<Maison> _maisons;
 public:
@@ -20,7 +20,7 @@ public:
     void ajoutRoute(coordonnee src,coordonnee dst);
     
 
-    void exec();
+    void exec(int rayon);
 
 
 };

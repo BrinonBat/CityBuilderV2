@@ -21,9 +21,17 @@ bool Maison::dejaRelie(coordonnee const &c)const{
     }
     return false;
 }
-
+void Maison::sortieflux(std::ostream & os)const{
+    os<<"x: "+std::to_string(_coord._x)+" y: "+std::to_string(_coord._y)+" z: "+std::to_string(_coord._z);
+}
+std::ostream &operator<<(std::ostream &os, Maison const &m){
+    m.sortieflux(os);
+    return os;
+}
 void Maison::ajoutRoute(coordonnee c){
     if(!dejaRelie(c)){
         _routes.push_back(c);
+    }else{
+        std::cout<<"Maison "<<(*this)<<"possède déjà une route vers cette maison"<<std::endl;
     }
 }
