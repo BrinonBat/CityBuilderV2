@@ -13,8 +13,11 @@ class Maison{
 private:
     coordonnee _coord;
     std::vector<coordonnee> _routes;
+
 public:
+	//constructeur
     Maison(coordonnee c):_coord(c){}
+
     Maison();
     coordonnee getCoord()const{return _coord;}
     std::vector<coordonnee> getRoute()const{return _routes;}
@@ -24,3 +27,4 @@ public:
     void sortieflux(std::ostream & os)const;
 };
 std::ostream & operator<<(std::ostream & os,Maison const & m);
+
