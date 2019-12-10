@@ -19,7 +19,7 @@ public:
     int getRayon()const{return _rayon;}
     int getNbsommet()const{return _nbsommet;}
     std::vector<Maison> getMaisons()const{return _maisons;}
-    
+
     bool estoccupe(coordonnee c);//retourne true si cet emplacement est occupé
     void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
@@ -41,7 +41,7 @@ public:
     void detruireRoute(coordonnee src, coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
 
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
-    
+
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
 
     void affichageVille();

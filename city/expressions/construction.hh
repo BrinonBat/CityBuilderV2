@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 struct coordonnee{
     int _x,_y,_z;
     bool operator==(coordonnee const &c)const{
@@ -12,14 +13,14 @@ struct coordonnee{
 class Maison{
 private:
     coordonnee _coord;
-    int _orientation; // orientation en degrée mod 360 de la maison 
+    int _orientation; // orientation en degrée mod 360 de la maison
     std::vector<coordonnee> _routes;
 
 public:
 	//constructeur
     Maison(coordonnee c):_coord(c),_orientation(90){}
-
     Maison(int r);//r est le rayon du graphe
+	
     coordonnee getCoord()const{return _coord;}
     std::vector<coordonnee> getRoute()const{return _routes;}
     int getOrientation()const{return _orientation;}
@@ -27,6 +28,8 @@ public:
 
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
+	void clearRoutes(){_routes.clear();}
+	void retireRoute(coordonnee c);//supprime une route vers ces coordonnées
     bool operator==(Maison const & m);
     void sortieflux(std::ostream & os)const;
 };

@@ -44,3 +44,9 @@ void Maison::ajoutRoute(coordonnee c){
         std::cout<<"Maison "<<(*this)<<"possède déjà une route vers cette maison"<<std::endl;
     }
 }
+void Maison::retireRoute(coordonnee c){
+	auto it=std::find(_routes.begin(),_routes.end(),c);
+	if(it!=_routes.end()){
+		_routes.erase(it);
+	}
+}
