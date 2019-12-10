@@ -31,4 +31,4 @@ public:
     void sortieflux(std::ostream & os)const;
 };
 std::ostream & operator<<(std::ostream & os,Maison const & m);
-
+std::ostream &operator<<(std::ostream &os, coordonnee c);

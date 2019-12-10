@@ -56,7 +56,7 @@ fin return token::END;
 "!" return '!';
 "[" return '[';
 "]" return ']';
-"°" return '°';
+"°" return token::degree;
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));

@@ -41,7 +41,7 @@
 
 %token                  NL
 %token                  END
-%token <int>            NUMBER degree 
+%token <int>            NUMBER
 %token                  build
 %token                  maison
 %token                  route
@@ -56,6 +56,7 @@
 %token                  position
 %token                  voisinage
 %token                  indmaison
+%token                  degree
 
 %type <int>             operation indice
 %type <coordonnee>      coordonnee
@@ -143,21 +144,27 @@ traitement:
         }
         | turn coordonnee senshoraire {
             std::cout<<"Tourner"<<std::endl;
+            ville.tournerMaison($2,$3);
         } 
         | turn indice senshoraire {
             std::cout<<"Tourner"<<std::endl;
+            ville.tournerMaison($2,$3);
         } 
-        | orienter coordonnee operation '°' {
+        | orienter coordonnee operation degree {
             std::cout<<"Orienter"<<std::endl;
+            ville.orienterMaison($2,$3);
         }
-        | orienter indice operation '°' {
+        | orienter indice operation degree {
             std::cout<<"Orienter"<<std::endl;
+            ville.orienterMaison($2,$3);
         }
         | orientation coordonnee {
-            std::cout<<"Orienter"<<std::endl;
+            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+                <<ville.getMaisons()[ville.indiceMaison($2)].getOrientation()<<std::endl;
         }
         | orientation indice {
-            std::cout<<"Orienter"<<std::endl;
+            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+                <<ville.getMaisons()[$2-1].getOrientation()<<std::endl;
         }
         | destroy coordonnee {
             std::cout<<"Detruire"<<std::endl;

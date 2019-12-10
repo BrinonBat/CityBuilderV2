@@ -32,7 +32,14 @@ public:
     void ajoutRoute(coordonnee src, int dst);
     void ajoutRoute(int src, coordonnee dst);
     void ajoutRoute(int src , int dst);
-    
+
+    void detruireMaison(int i);//detruire maison d'indice i
+    void detruireMaison(coordonnee c);//détruire maison aux coordonne c
+    void detruireRoute(int src,int dst);//detruire route de maison indice src a maison indice dst
+    void detruireRoute(int src, coordonnee dst); //detruire route de maison indice src a maison coordonnee dst
+    void detruireRoute(coordonnee src, int dst); //detruire route de coordonnee indice src a maison indice dst
+    void detruireRoute(coordonnee src, coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
+
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
     
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
