@@ -20,7 +20,7 @@ public:
     int getNbsommet()const{return _nbsommet;}
     std::vector<Maison> getMaisons()const{return _maisons;}
 
-    bool estoccupe(coordonnee c);//retourne true si cet emplacement est occupé
+    bool estOccupe(coordonnee c);//retourne true si cet emplacement est occupé
     void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
     void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
@@ -38,13 +38,15 @@ public:
     void detruireRoute(int src,int dst);//detruire route de maison indice src a maison indice dst
     void detruireRoute(int src, coordonnee dst); //detruire route de maison indice src a maison coordonnee dst
     void detruireRoute(coordonnee src, int dst); //detruire route de coordonnee indice src a maison indice dst
-    void detruireRoute(coordonnee src, coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
+    void detruireRoute(coordonnee src,  coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
+
+	void deplaceMaison(int src, coordonnee dst); // déplace la maison numero src aux coordonnées dst
+	void deplaceMaison(coordonnee src, coordonnee dst); // déplace la maison située à src aux coordonnées dst
 
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
 
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
 
+
     void affichageVille();
-
-
 };

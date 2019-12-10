@@ -1,5 +1,5 @@
 #include "instrution.hh"
-bool instruction::estoccupe(coordonnee c){
+bool instruction::estOccupe(coordonnee c){
     for (auto &i : _maisons)
     {
         if (i.getCoord()==c){
@@ -10,14 +10,14 @@ bool instruction::estoccupe(coordonnee c){
 }
 void instruction::ajoutMaison(){
     Maison m(_rayon);
-    if(!estoccupe(m.getCoord())){
+    if(!estOccupe(m.getCoord())){
         _nbsommet++;
         _maisons.push_back(m);
     }
 
 }
 void  instruction::ajoutMaison(coordonnee c){
-    if(!estoccupe(c)){
+    if(!estOccupe(c)){
          _nbsommet++;
         _maisons.push_back(Maison(c));
     }
@@ -72,7 +72,7 @@ void instruction::detruireMaison(int i){
 		//suppression des routes sortantes
 		_maisons[i-1].clearRoutes();
 		//suppression des routes entrantes
-		for(auto m : _maisons){
+		for(auto &m : _maisons){
 			m.retireRoute(_maisons[i-1].getCoord());
 		}
 		//suppression de la maison
@@ -98,6 +98,23 @@ void instruction::detruireRoute(coordonnee src, int dst){
 void instruction::detruireRoute(coordonnee src, coordonnee dst){
 	int ind=indiceMaison(src);
 	_maisons[ind].retireRoute(dst);
+}
+
+void instruction::deplaceMaison(int src, coordonnee dst){
+	if((unsigned int)src<=_maisons.size())
+		deplaceMaison(_maisons[src-1].getCoord(),dst);
+}
+
+void instruction::deplaceMaison(coordonnee src, coordonnee dst){
+	if(!estOccupe(dst)){
+		//redirection des routes
+		for(auto &m : _maisons){
+			m.deplaceRoutes(src,dst);
+		}
+		//déplacement de la maison
+		_maisons[indiceMaison(src)].setCoord(dst);
+	}
+
 }
 
 int instruction::indiceMaison(coordonnee c){

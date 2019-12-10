@@ -14,6 +14,14 @@ Maison::Maison(int r):_orientation(90){
 bool Maison::operator==(Maison const & m){
     return _coord==m.getCoord();
 }
+
+void Maison::deplaceRoutes(coordonnee avant,coordonnee apres){
+	for(auto &c: _routes){
+		if(c==avant)c=apres;
+		break;
+	}
+}
+
 bool Maison::dejaRelie(coordonnee const &c)const{
     for(auto const &i:_routes){
         if(i==c){
