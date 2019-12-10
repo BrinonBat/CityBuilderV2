@@ -13,24 +13,23 @@ const int Max = 1000;
 class Graphe{
   private : 
     std::array<std::array<int,Max>, Max> matrice;
-    std::array<bool,Max> parcourus;
     int nbSommet;
-    int rayon;
     bool oriente;
-    std::vector<Maison> _sommets;
     
   public :
 
     Graphe();
-    Graphe(int r);
     ~Graphe();
     void initMatrice();
-    int getnbSommet(int i) {return nbSommet;}
+
+    int getnbSommet()const {return nbSommet;}
+    void setnbSommet(int n){nbSommet=n;}
     void setOriente(bool o) {oriente = o;};
-    void ajoutSommet(Maison const &m);
-    void ajoutArc(int,int,int); 
+    std::array<std::array<int, Max>, Max> mat()const{return matrice;}
+        //void ajoutArc(int,int,int); pas utile comme ya pas de poids d'arc
+        void ajoutArc(int, int);
     void affichageMatrice(); 
     void parcoursProfondeur();
-    void explorer(int s);
     void parcoursLargeur();
 };
+using graphePtr = std::shared_ptr<Graphe>;

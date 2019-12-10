@@ -1,17 +1,34 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <memory>
 struct coordonnee{
     int _x,_y,_z;
+    bool operator==(coordonnee const &c)const{
+        return (_x==c._x)&&(_y==c._y)&&(_z==c._z);
+    }
 };
+
 class Maison{
 private:
-    coordonnee _coord; // situation sommet
-    std::vector<coordonnee> _routes; // arcs
+    coordonnee _coord;
+    int _orientation; // orientation en degrée de la maison
+    std::vector<coordonnee> _routes;
+
 public:
 	//constructeur
-    Maison(coordonnee c):_coord(c){}
-	//getters & setters
-	coordonnee get_coord()const{return _coord;}
-	void ajoutRoute(Maison m2){_route.push_back(m2);} // ajoute la route (arc) vers m2
+    Maison(coordonnee c):_coord(c),_orientation(90){}
+
+    Maison();
+    coordonnee getCoord()const{return _coord;}
+    std::vector<coordonnee> getRoute()const{return _routes;}
+    int getOrientation()const{return _orientation;}
+
+
+    bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
+    void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
+    bool operator==(Maison const & m);
+    void sortieflux(std::ostream & os)const;
 };
+std::ostream & operator<<(std::ostream & os,Maison const & m);
+

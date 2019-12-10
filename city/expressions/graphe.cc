@@ -3,9 +3,7 @@
 #include <iostream>
 #include <queue>
 
-Graphe::Graphe(): nbSommet(0), oriente(false){
-}
-Graphe::Graphe(int r): nbSommet(0),rayon(r), oriente(false){
+Graphe::Graphe(): nbSommet(0), oriente(true){
 }
 Graphe::~Graphe(){
 
@@ -14,23 +12,18 @@ Graphe::~Graphe(){
 void Graphe::initMatrice(){
   for (int i=0; i<nbSommet; ++i){
     for (int j=0; j<nbSommet; ++j){
-      if(matrice[i][j]!=1){
+      if (matrice[i][j]!=1 &&(matrice[i][j]!=0))
         matrice[i][j]=0;
-      }
     }
   }
   std::cout << "Graphe initialisé " <<std::endl;
 }
 
-void Graphe::ajoutArc(int origine,int destination, int c){
-  if (!oriente) matrice[destination-1][origine-1] = c;
-  matrice[origine-1][destination-1] = c;
+void Graphe::ajoutArc(int origine,int destination){
+  matrice[origine][destination] = 1;
 }
 
-void Graphe::ajoutSommet(Maison const & m){
-  _sommets.push_back(m);
-  nbSommet++;
-}
+
 void Graphe::affichageMatrice(){
   std::vector<int> largeurColonne;
 
@@ -39,7 +32,7 @@ void Graphe::affichageMatrice(){
     int max=0;
     for (int j=0; j<nbSommet; ++j){
       std::ostringstream tmp;
-      tmp << matrice[j][i];
+      tmp << matrice[i][j];
       if (tmp.tellp() > max) {max=tmp.tellp();}
     }
     largeurColonne.push_back(max);
@@ -63,11 +56,4 @@ void Graphe::affichageMatrice(){
   }
 }
 
-void Graphe::explorer(int s){
-  parcourus[s]=true;
-  std::cout << "S" << s+1 << " ";
-  for (int i=0;i<nbSommet;++i) {
-    if (!parcourus[i] and (matrice[s][i]!=0))
-      explorer(i);
-  }
-}
+
