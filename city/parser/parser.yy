@@ -41,7 +41,7 @@
 
 %token                  NL
 %token                  END
-%token <int>            NUMBER degree 
+%token <int>            NUMBER
 %token                  build
 %token                  maison
 %token                  route
@@ -56,10 +56,11 @@
 %token                  position
 %token                  voisinage
 %token                  indmaison
+%token                  degree
 
 %type <int>             operation indice
 %type <coordonnee>      coordonnee
-%type<std::string>      senshoraire
+%type<bool>             senshoraire
 %type<std::string>      traitement traitements 
 %left '-' '+'
 %left '*' '/'
@@ -143,21 +144,27 @@ traitement:
         }
         | turn coordonnee senshoraire {
             std::cout<<"Tourner"<<std::endl;
+            ville.tournerMaison($2,$3);
         } 
         | turn indice senshoraire {
             std::cout<<"Tourner"<<std::endl;
+            ville.tournerMaison($2,$3);
         } 
-        | orienter coordonnee degree {
+        | orienter coordonnee operation degree {
             std::cout<<"Orienter"<<std::endl;
+            ville.orienterMaison($2,$3);
         }
-        | orienter indice degree {
+        | orienter indice operation degree {
             std::cout<<"Orienter"<<std::endl;
+            ville.orienterMaison($2,$3);
         }
         | orientation coordonnee {
-            std::cout<<"Orienter"<<std::endl;
+            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+                <<ville.getMaisons()[ville.indiceMaison($2)].getOrientation()<<std::endl;
         }
         | orientation indice {
-            std::cout<<"Orienter"<<std::endl;
+            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+                <<ville.getMaisons()[$2-1].getOrientation()<<std::endl;
         }
         | destroy coordonnee {
             std::cout<<"Detruire"<<std::endl;
@@ -196,9 +203,11 @@ traitement:
 senshoraire:
     horaire{
         std::cout<<"horaire";
+        $$=true;
     }
     | '!' horaire{
         std::cout<<"!horaire";
+        $$=false;
     }
 
 indice:

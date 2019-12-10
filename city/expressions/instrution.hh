@@ -23,12 +23,23 @@ public:
     bool estoccupe(coordonnee c);//retourne true si cet emplacement est occupé
     void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
-    
+    void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
+    void tournerMaison(coordonnee c, bool horaire); //tourner maison d'indice i sens !horaire
+    void orienterMaison(int i,int r);//orienter maison indice i a tel degree
+    void orienterMaison(coordonnee c,int r); //orienter maison coordonne c a tel degree
+
     void ajoutRoute(coordonnee src,coordonnee dst);
     void ajoutRoute(coordonnee src, int dst);
     void ajoutRoute(int src, coordonnee dst);
     void ajoutRoute(int src , int dst);
-    
+
+    void detruireMaison(int i);//detruire maison d'indice i
+    void detruireMaison(coordonnee c);//détruire maison aux coordonne c
+    void detruireRoute(int src,int dst);//detruire route de maison indice src a maison indice dst
+    void detruireRoute(int src, coordonnee dst); //detruire route de maison indice src a maison coordonnee dst
+    void detruireRoute(coordonnee src, int dst); //detruire route de coordonnee indice src a maison indice dst
+    void detruireRoute(coordonnee src, coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
+
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
     
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true

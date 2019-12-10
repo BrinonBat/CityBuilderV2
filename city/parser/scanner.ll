@@ -41,12 +41,6 @@ fin return token::END;
 "Voisinage" return token::voisinage;
 "maison" return token::indmaison;
 
-([1-3]?[0-9]?[0-9])°     {/* degree pour changer d'orientation */
-    yylval->build<int>(std::atoi(YYText()));
-    return token::degree;
-}
-
-
 
 "+" return '+';
 "*" return '*';
@@ -62,6 +56,7 @@ fin return token::END;
 "!" return '!';
 "[" return '[';
 "]" return ']';
+"°" return token::degree;
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));

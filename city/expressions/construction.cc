@@ -2,11 +2,12 @@
 #include <cstdlib>
 #include <time.h>
 #include<ctime>
+#include <iostream>
 
-Maison::Maison():_orientation(90){
+Maison::Maison(int r):_orientation(90){
     std::srand(std::time(nullptr));
-    _coord._x = (rand() % (5 * 2) + 1) - 5;
-    _coord._z = (rand() % (5 * 2) + 1) - 5;
+    _coord._x = (rand() % (r * 2) + 1) - 5;
+    _coord._z = (rand() % (r * 2) + 1) - 5;
     _coord._y = -_coord._x-_coord._z;
 }
 
@@ -30,6 +31,10 @@ void Maison::sortieflux(std::ostream & os)const{
 }
 std::ostream &operator<<(std::ostream &os, Maison const &m){
     m.sortieflux(os);
+    return os;
+}
+std::ostream &operator<<(std::ostream &os, coordonnee c){
+    os<<"("<<c._x<<","<<c._y<<","<<c._z<<")";
     return os;
 }
 void Maison::ajoutRoute(coordonnee c){
