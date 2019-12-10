@@ -62,6 +62,7 @@ void instruction::affichageVille(){
     std::cout << "NBSommets: " << std::to_string(_nbsommet) << std::endl;
     std::cout<<"Maisons: "<<std::endl;
     for(auto const & i:_maisons){
+        std::cout<<"indice: "<<indiceMaison(i.getCoord())<<" ";
         i.sortieflux(std::cout);
         std::cout<<std::endl;
     }

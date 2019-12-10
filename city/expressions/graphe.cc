@@ -20,8 +20,7 @@ void Graphe::initMatrice(){
 }
 
 void Graphe::ajoutArc(int origine,int destination){
-  if (!oriente) matrice[destination-1][origine-1] = 1;
-  matrice[origine-1][destination-1] = 1;
+  matrice[origine][destination] = 1;
 }
 
 
@@ -33,7 +32,7 @@ void Graphe::affichageMatrice(){
     int max=0;
     for (int j=0; j<nbSommet; ++j){
       std::ostringstream tmp;
-      tmp << matrice[j][i];
+      tmp << matrice[i][j];
       if (tmp.tellp() > max) {max=tmp.tellp();}
     }
     largeurColonne.push_back(max);

@@ -30,6 +30,22 @@ fin return token::END;
 "Maison" return token::maison;
 "Route" return token::route;
 "->" return token::arrow;
+"Tourner" return token::turn;
+"horaire" return token::horaire;
+"Orienter" return token::orienter;
+"Detruire" return token::destroy;
+
+(maison\[[0-9]+\])  {/* reperage de maison avec indice */
+    yylval->build<int>(std::atoi(YYText()));
+    return token::indice;
+}
+
+([0-9]|[1-3][0-9][0-9]|[1-9][0-9])°     {/* degree pour changer d'orientation */
+    yylval->build<int>(std::atoi(YYText()));
+    return token::degree;
+}
+
+
 
 "+" return '+';
 "*" return '*';
@@ -42,6 +58,7 @@ fin return token::END;
 "}" return '}';
 "," return ',';
 "\'" return '\'';
+"!" return '!';
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));

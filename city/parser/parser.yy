@@ -17,6 +17,7 @@
     #include "graphe.hh"
     #include "construction.hh"
     #include "instrution.hh"
+    #include <iostream>
 
     class Scanner;
     class Driver;
@@ -40,17 +41,22 @@
 
 %token                  NL
 %token                  END
-%token <int>            NUMBER
+%token <int>            NUMBER indice degree
 %token                  build
 %token                  maison
 %token                  route
 %token                  arrow
 %token                  comcourt
 %token                  com
+%token                  horaire
+%token                  turn
+%token                  orienter
+%token                  destroy
 
 %type <int>             operation
 %type <coordonnee>      coordonnee
-%type<std::string>      traitement traitements
+%type<std::string>      senshoraire
+%type<std::string>      traitement traitements 
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -58,7 +64,11 @@
 %%
 
 programme:
-    instruction{
+    instruction NL programme
+    | instruction{
+        YYACCEPT;
+    }
+    | END NL{
         YYACCEPT;
     }
 
@@ -112,8 +122,32 @@ traitement:
         | com {
             std::cout<<"Commentaire"<<std::endl;
         }
+        | turn coordonnee senshoraire {
+            std::cout<<"Tourner"<<std::endl;
+        }  
+        | turn indice senshoraire {
+            std::cout<<"Tourner indice"<<std::endl;
+        } 
+        | orienter coordonnee degree {
+            std::cout<<"Orienter"<<std::endl;
+        }
+        | orienter indice degree {
+            std::cout<<"Orienter indice"<<std::endl;
+        }
+        | destroy coordonnee {
+            std::cout<<"Detruire"<<std::endl;
+        }
+        | destroy indice {
+            std::cout<<"Detruire indice"<<std::endl;
+        }
 
-
+senshoraire:
+    horaire{
+        std::cout<<"horaire";
+    }
+    | '!' horaire{
+        std::cout<<"!horaire";
+    }
 
 coordonnee:
         '(' operation ',' operation ',' operation ')' {
