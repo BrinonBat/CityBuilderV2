@@ -59,7 +59,7 @@
 
 %type <int>             operation indice
 %type <coordonnee>      coordonnee
-%type<std::string>      senshoraire
+%type<bool>             senshoraire
 %type<std::string>      traitement traitements 
 %left '-' '+'
 %left '*' '/'
@@ -147,10 +147,10 @@ traitement:
         | turn indice senshoraire {
             std::cout<<"Tourner"<<std::endl;
         } 
-        | orienter coordonnee degree {
+        | orienter coordonnee operation '°' {
             std::cout<<"Orienter"<<std::endl;
         }
-        | orienter indice degree {
+        | orienter indice operation '°' {
             std::cout<<"Orienter"<<std::endl;
         }
         | orientation coordonnee {
@@ -196,9 +196,11 @@ traitement:
 senshoraire:
     horaire{
         std::cout<<"horaire";
+        $$=true;
     }
     | '!' horaire{
         std::cout<<"!horaire";
+        $$=false;
     }
 
 indice:

@@ -23,7 +23,11 @@ public:
     bool estoccupe(coordonnee c);//retourne true si cet emplacement est occupé
     void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
-    
+    void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
+    void tournerMaison(coordonnee c, bool horaire); //tourner maison d'indice i sens !horaire
+    void orienterMaison(int i,int r);//orienter maison indice i a tel degree
+    void orienterMaison(coordonnee c,int r); //orienter maison coordonne c a tel degree
+
     void ajoutRoute(coordonnee src,coordonnee dst);
     void ajoutRoute(coordonnee src, int dst);
     void ajoutRoute(int src, coordonnee dst);

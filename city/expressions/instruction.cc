@@ -9,7 +9,7 @@ bool instruction::estoccupe(coordonnee c){
     return false;
 }
 void instruction::ajoutMaison(){
-    Maison m;
+    Maison m(_rayon);
     if(!estoccupe(m.getCoord())){
         _nbsommet++;
         _maisons.push_back(m);
@@ -23,6 +23,28 @@ void  instruction::ajoutMaison(coordonnee c){
     }
     
 }
+
+void instruction::tournerMaison(int i, bool horaire){
+    if(horaire){
+        _maisons[i - 1].setOrientation(_maisons[i - 1].getOrientation()+60);
+    }else{
+        _maisons[i - 1].setOrientation(_maisons[i - 1].getOrientation() - 60);
+    }
+}        
+void instruction::tournerMaison(coordonnee c, bool horaire){
+    if (horaire){
+        _maisons[indiceMaison(c)].setOrientation(_maisons[indiceMaison(c)].getOrientation() + 60);
+    }
+    else{
+        _maisons[indiceMaison(c)].setOrientation(_maisons[indiceMaison(c)].getOrientation() - 60);
+    }
+}
+void instruction::orienterMaison(int i,int r){
+    _maisons[i - 1].setOrientation(r);
+}                   
+void instruction::orienterMaison(coordonnee c, int r){
+    _maisons[indiceMaison(c)].setOrientation(r);
+}              
 
 void instruction::ajoutRoute(coordonnee src,coordonnee dst){
     for(auto & i:_maisons){

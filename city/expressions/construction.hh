@@ -12,18 +12,18 @@ struct coordonnee{
 class Maison{
 private:
     coordonnee _coord;
-    int _orientation; // orientation en degrée de la maison
+    int _orientation; // orientation en degrée mod 360 de la maison 
     std::vector<coordonnee> _routes;
 
 public:
 	//constructeur
     Maison(coordonnee c):_coord(c),_orientation(90){}
 
-    Maison();
+    Maison(int r);//r est le rayon du graphe
     coordonnee getCoord()const{return _coord;}
     std::vector<coordonnee> getRoute()const{return _routes;}
     int getOrientation()const{return _orientation;}
-
+    void setOrientation(int o){_orientation=(o%360);}
 
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
