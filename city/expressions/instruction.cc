@@ -88,18 +88,28 @@ void instruction::detruireMaison(coordonnee c){
 		}
 	}
 }
-/*
-void instruction::detruireRoute(int srx,int dst){
+
+void instruction::detruireRoute(int src,int dst){
 	_maisons[src-1].retireRoute(_maisons[dst-1].getCoord());
 }
-void instruction::detruireRoute(int srx, coordonnee dst){
+void instruction::detruireRoute(int src, coordonnee dst){
+	_maisons[src-1].retireRoute(dst);
+}
+void instruction::detruireRoute(coordonnee src, int dst){
+	for (auto &i : _maisons){
+        if (i.getCoord() == src){
+            i.retireRoute(_maisons[dst-1].getCoord());
+        }
+    }
+}
+void instruction::detruireRoute(coordonnee src, coordonnee dst){
+	for (auto &i : _maisons){
+        if (i.getCoord() == src){
+            i.retireRoute(dst);
+        }
+    }
+}
 
-}
-void instruction::detruireRoute(coordonnee srx, int dst){
-}
-void instruction::detruireRoute(coordonnee srx, coordonnee dst){
-}
-*/
 
 
 
