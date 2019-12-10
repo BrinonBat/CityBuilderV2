@@ -20,8 +20,10 @@ public:
     int getNbsommet()const{return _nbsommet;}
     std::vector<Maison> getMaisons()const{return _maisons;}
 
+
     bool estOccupe(coordonnee c);//retourne true si cet emplacement est occupé
-    void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
+	bool existe(coordonnee c); //retourne true si l'emplacement est présent sur le graphe
+	void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
     void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
     void tournerMaison(coordonnee c, bool horaire); //tourner maison d'indice i sens !horaire

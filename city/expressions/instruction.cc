@@ -1,13 +1,21 @@
 #include "instrution.hh"
 bool instruction::estOccupe(coordonnee c){
-    for (auto &i : _maisons)
-    {
-        if (i.getCoord()==c){
-            return true;
-        }
-    }
-    return false;
+	if(existe(c)){
+	    for (auto &i : _maisons)
+	    {
+	        if (i.getCoord()==c){
+	            return true;
+	        }
+	    }
+	}
+	    return false;
 }
+bool instruction::existe(coordonnee c){
+	// if dans le graphe
+	return true;
+	//else return false
+}
+
 void instruction::ajoutMaison(){
     Maison m(_rayon);
     if(!estOccupe(m.getCoord())){
@@ -47,11 +55,13 @@ void instruction::orienterMaison(coordonnee c, int r){
 }
 
 void instruction::ajoutRoute(coordonnee src,coordonnee dst){
-    for(auto & i:_maisons){
-        if(i.getCoord()==src){
-            i.ajoutRoute(dst);
-        }
-    }
+	if(estOccupe(dst)){
+		for(auto & i:_maisons){
+	        if(i.getCoord()==src){
+	            i.ajoutRoute(dst);
+	        }
+	    }
+	}
 }
 void instruction::ajoutRoute(int src, coordonnee dst){
     _maisons[src-1].ajoutRoute(dst);
@@ -81,8 +91,10 @@ void instruction::detruireMaison(int i){
 }
 
 void instruction::detruireMaison(coordonnee c){
-	int ind=indiceMaison(c);
-	detruireMaison(ind);
+	if(estOccupe(c)){
+		int ind=indiceMaison(c);
+		detruireMaison(ind);
+	}
 }
 
 void instruction::detruireRoute(int src,int dst){
