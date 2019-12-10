@@ -41,7 +41,7 @@
 
 %token                  NL
 %token                  END
-%token <int>            NUMBER indice degree
+%token <int>            NUMBER degree 
 %token                  build
 %token                  maison
 %token                  route
@@ -50,10 +50,14 @@
 %token                  com
 %token                  horaire
 %token                  turn
-%token                  orienter
+%token                  orienter orientation
 %token                  destroy
+%token                  deplacer
+%token                  position
+%token                  voisinage
+%token                  indmaison
 
-%type <int>             operation
+%type <int>             operation indice
 %type <coordonnee>      coordonnee
 %type<std::string>      senshoraire
 %type<std::string>      traitement traitements 
@@ -119,27 +123,75 @@ traitement:
             ville.ajoutRoute($2,$4);
 
         }
+        | route coordonnee arrow indice  {
+            std::cout<<"Route "<<"->"<<std::endl;
+            ville.ajoutRoute($2,$4);
+
+        }
+        | route indice arrow indice  {
+            std::cout<<"Route "<<"->"<<std::endl;
+            ville.ajoutRoute($2,$4);
+
+        }
+        | route indice arrow coordonnee  {
+            std::cout<<"Route "<<"->"<<std::endl;
+            ville.ajoutRoute($2,$4);
+
+        }
         | com {
-            std::cout<<"Commentaire"<<std::endl;
+            std::cout<<"\t\tCommentaire"<<std::endl;
         }
         | turn coordonnee senshoraire {
             std::cout<<"Tourner"<<std::endl;
-        }  
+        } 
         | turn indice senshoraire {
-            std::cout<<"Tourner indice"<<std::endl;
+            std::cout<<"Tourner"<<std::endl;
         } 
         | orienter coordonnee degree {
             std::cout<<"Orienter"<<std::endl;
         }
         | orienter indice degree {
-            std::cout<<"Orienter indice"<<std::endl;
+            std::cout<<"Orienter"<<std::endl;
+        }
+        | orientation coordonnee {
+            std::cout<<"Orienter"<<std::endl;
+        }
+        | orientation indice {
+            std::cout<<"Orienter"<<std::endl;
         }
         | destroy coordonnee {
             std::cout<<"Detruire"<<std::endl;
         }
         | destroy indice {
-            std::cout<<"Detruire indice"<<std::endl;
+            std::cout<<"Detruire"<<std::endl;
         }
+        | destroy coordonnee arrow coordonnee {
+            std::cout<<"Detruire"<<std::endl;
+        }
+        | destroy coordonnee arrow indice {
+            std::cout<<"Detruire"<<std::endl;
+        }
+        | destroy indice arrow coordonnee {
+            std::cout<<"Detruire"<<std::endl;
+        }
+        | destroy indice arrow indice {
+            std::cout<<"Detruire"<<std::endl;
+        }
+        | deplacer coordonnee arrow coordonnee {
+            std::cout<<"Deplacer"<<std::endl;
+        }
+        | deplacer indice arrow coordonnee {
+            std::cout<<"Deplacer"<<std::endl;
+        }
+        | position indice {
+            std::cout<<"position indice"<<std::endl;
+        } 
+        | voisinage coordonnee {
+            std::cout<<"voisinage indice"<<std::endl;
+        } 
+        | voisinage indice {
+            std::cout<<"voisinage indice"<<std::endl;
+        } 
 
 senshoraire:
     horaire{
@@ -147,6 +199,11 @@ senshoraire:
     }
     | '!' horaire{
         std::cout<<"!horaire";
+    }
+
+indice:
+    indmaison '[' NUMBER ']' {
+        $$=$3;
     }
 
 coordonnee:

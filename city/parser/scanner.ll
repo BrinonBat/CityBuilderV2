@@ -3,6 +3,7 @@
 #include "scanner.hh"
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 #define YY_NO_UNISTD_H
 
@@ -33,14 +34,14 @@ fin return token::END;
 "Tourner" return token::turn;
 "horaire" return token::horaire;
 "Orienter" return token::orienter;
+"Orientation" return token::orientation;
 "Detruire" return token::destroy;
+"Deplacer" return token::deplacer;
+"Position" return token::position;
+"Voisinage" return token::voisinage;
+"maison" return token::indmaison;
 
-(maison\[[0-9]+\])  {/* reperage de maison avec indice */
-    yylval->build<int>(std::atoi(YYText()));
-    return token::indice;
-}
-
-([0-9]|[1-3][0-9][0-9]|[1-9][0-9])°     {/* degree pour changer d'orientation */
+([1-3]?[0-9]?[0-9])°     {/* degree pour changer d'orientation */
     yylval->build<int>(std::atoi(YYText()));
     return token::degree;
 }
@@ -59,6 +60,8 @@ fin return token::END;
 "," return ',';
 "\'" return '\'';
 "!" return '!';
+"[" return '[';
+"]" return ']';
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));

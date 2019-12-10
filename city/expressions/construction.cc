@@ -3,7 +3,7 @@
 #include <time.h>
 #include<ctime>
 
-Maison::Maison(){
+Maison::Maison():_orientation(90){
     std::srand(std::time(nullptr));
     _coord._x = (rand() % (5 * 2) + 1) - 5;
     _coord._z = (rand() % (5 * 2) + 1) - 5;

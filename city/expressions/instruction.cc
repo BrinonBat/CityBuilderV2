@@ -31,6 +31,19 @@ void instruction::ajoutRoute(coordonnee src,coordonnee dst){
         }
     }
 }
+void instruction::ajoutRoute(int src, coordonnee dst){
+    _maisons[src-1].ajoutRoute(dst);
+}
+void instruction::ajoutRoute(coordonnee src, int dst){
+    for (auto &i : _maisons){
+        if (i.getCoord() == src){
+            i.ajoutRoute(_maisons[dst-1].getCoord());
+        }
+    }
+}
+void instruction::ajoutRoute(int src, int dst){
+    _maisons[src-1].ajoutRoute(_maisons[dst-1].getCoord());
+}
 
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){

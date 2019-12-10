@@ -23,7 +23,12 @@ public:
     bool estoccupe(coordonnee c);//retourne true si cet emplacement est occupé
     void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
+    
     void ajoutRoute(coordonnee src,coordonnee dst);
+    void ajoutRoute(coordonnee src, int dst);
+    void ajoutRoute(int src, coordonnee dst);
+    void ajoutRoute(int src , int dst);
+    
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
     
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true

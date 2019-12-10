@@ -12,15 +12,19 @@ struct coordonnee{
 class Maison{
 private:
     coordonnee _coord;
+    int _orientation; // orientation en degrée de la maison
     std::vector<coordonnee> _routes;
 
 public:
 	//constructeur
-    Maison(coordonnee c):_coord(c){}
+    Maison(coordonnee c):_coord(c),_orientation(90){}
 
     Maison();
     coordonnee getCoord()const{return _coord;}
     std::vector<coordonnee> getRoute()const{return _routes;}
+    int getOrientation()const{return _orientation;}
+
+
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
     bool operator==(Maison const & m);
