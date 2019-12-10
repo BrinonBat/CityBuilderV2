@@ -81,12 +81,8 @@ void instruction::detruireMaison(int i){
 }
 
 void instruction::detruireMaison(coordonnee c){
-	for(unsigned int i(0);i<=_maisons.size();++i){
-		if(_maisons[i].getCoord()==c){
-			detruireMaison(i);
-			break;
-		}
-	}
+	int ind=indiceMaison(c);
+	detruireMaison(ind);
 }
 
 void instruction::detruireRoute(int src,int dst){
@@ -96,29 +92,13 @@ void instruction::detruireRoute(int src, coordonnee dst){
 	_maisons[src-1].retireRoute(dst);
 }
 void instruction::detruireRoute(coordonnee src, int dst){
-	for (auto &i : _maisons){
-        if (i.getCoord() == src){
-            i.retireRoute(_maisons[dst-1].getCoord());
-        }
-    }
+	int ind=indiceMaison(src);
+    _maisons[ind].retireRoute(_maisons[dst-1].getCoord());
 }
 void instruction::detruireRoute(coordonnee src, coordonnee dst){
-	for (auto &i : _maisons){
-        if (i.getCoord() == src){
-            i.retireRoute(dst);
-        }
-    }
+	int ind=indiceMaison(src);
+	_maisons[ind].retireRoute(dst);
 }
-
-
-
-
-
-
-
-
-
-
 
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){
