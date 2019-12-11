@@ -26,21 +26,14 @@ public:
 	void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
     void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
-    void tournerMaison(coordonnee c, bool horaire); //tourner maison d'indice i sens !horaire
     void orienterMaison(int i,int r);//orienter maison indice i a tel degree
-    void orienterMaison(coordonnee c,int r); //orienter maison coordonne c a tel degree
 
-    void ajoutRoute(coordonnee src,coordonnee dst);
-    void ajoutRoute(coordonnee src, int dst);
-    void ajoutRoute(int src, coordonnee dst);
+    //ajout route de maison indice src a maison indice dst
+    //les coordonées sont tranformé en indice avec indiceMaison()
     void ajoutRoute(int src , int dst);
 
     void detruireMaison(int i);//detruire maison d'indice i
-    void detruireMaison(coordonnee c);//détruire maison aux coordonne c
     void detruireRoute(int src,int dst);//detruire route de maison indice src a maison indice dst
-    void detruireRoute(int src, coordonnee dst); //detruire route de maison indice src a maison coordonnee dst
-    void detruireRoute(coordonnee src, int dst); //detruire route de coordonnee indice src a maison indice dst
-    void detruireRoute(coordonnee src,  coordonnee dst); //detruire route de maison coordonnee src a maison coordonnee dst
 
 	void deplaceMaison(int src, coordonnee dst); // déplace la maison numero src aux coordonnées dst
 	void deplaceMaison(coordonnee src, coordonnee dst); // déplace la maison située à src aux coordonnées dst

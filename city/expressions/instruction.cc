@@ -34,87 +34,44 @@ void  instruction::ajoutMaison(coordonnee c){
 
 void instruction::tournerMaison(int i, bool horaire){
     if(horaire){
-        _maisons[i - 1].setOrientation(_maisons[i - 1].getOrientation()+60);
+        _maisons[i].setOrientation(_maisons[i].getOrientation()+60);
     }else{
-        _maisons[i - 1].setOrientation(_maisons[i - 1].getOrientation() - 60);
+        _maisons[i].setOrientation(_maisons[i].getOrientation() - 60);
     }
-}
-void instruction::tournerMaison(coordonnee c, bool horaire){
-    if (horaire){
-        _maisons[indiceMaison(c)].setOrientation(_maisons[indiceMaison(c)].getOrientation() + 60);
-    }
-    else{
-        _maisons[indiceMaison(c)].setOrientation(_maisons[indiceMaison(c)].getOrientation() - 60);
-    }
-}
-void instruction::orienterMaison(int i,int r){
-    _maisons[i - 1].setOrientation(r);
-}
-void instruction::orienterMaison(coordonnee c, int r){
-    _maisons[indiceMaison(c)].setOrientation(r);
 }
 
-void instruction::ajoutRoute(coordonnee src,coordonnee dst){
-	if(estOccupe(dst)){
-		for(auto & i:_maisons){
-	        if(i.getCoord()==src){
-	            i.ajoutRoute(dst);
-	        }
-	    }
-	}
+void instruction::orienterMaison(int i,int r){
+    _maisons[i].setOrientation(r);
 }
-void instruction::ajoutRoute(int src, coordonnee dst){
-    _maisons[src-1].ajoutRoute(dst);
-}
-void instruction::ajoutRoute(coordonnee src, int dst){
-    for (auto &i : _maisons){
-        if (i.getCoord() == src){
-            i.ajoutRoute(_maisons[dst-1].getCoord());
-        }
-    }
-}
+
 void instruction::ajoutRoute(int src, int dst){
-    _maisons[src-1].ajoutRoute(_maisons[dst-1].getCoord());
+    _maisons[src].ajoutRoute(_maisons[dst].getCoord());
 }
 
 void instruction::detruireMaison(int i){
 	if((unsigned int)i<=_maisons.size()){
 		//suppression des routes sortantes
-		_maisons[i-1].clearRoutes();
+		_maisons[i].clearRoutes();
 		//suppression des routes entrantes
 		for(auto &m : _maisons){
-			m.retireRoute(_maisons[i-1].getCoord());
+			m.retireRoute(_maisons[i].getCoord());
 		}
 		//suppression de la maison
-		_maisons.erase(_maisons.begin()+(i-1));
-	}
-}
-
-void instruction::detruireMaison(coordonnee c){
-	if(estOccupe(c)){
-		int ind=indiceMaison(c);
-		detruireMaison(ind);
+		_maisons.erase(_maisons.begin()+(i));
 	}
 }
 
 void instruction::detruireRoute(int src,int dst){
-	_maisons[src-1].retireRoute(_maisons[dst-1].getCoord());
-}
-void instruction::detruireRoute(int src, coordonnee dst){
-	_maisons[src-1].retireRoute(dst);
-}
-void instruction::detruireRoute(coordonnee src, int dst){
-	int ind=indiceMaison(src);
-    _maisons[ind].retireRoute(_maisons[dst-1].getCoord());
-}
-void instruction::detruireRoute(coordonnee src, coordonnee dst){
-	int ind=indiceMaison(src);
-	_maisons[ind].retireRoute(dst);
+	_maisons[src].retireRoute(_maisons[dst].getCoord());
 }
 
+
 void instruction::deplaceMaison(int src, coordonnee dst){
-	if((unsigned int)src<=_maisons.size())
-		deplaceMaison(_maisons[src-1].getCoord(),dst);
+	if((unsigned int)src<_maisons.size()){
+		deplaceMaison(_maisons[src].getCoord(),dst);
+    }else{
+        std::cout<<"L'indice "+std::to_string(src)+" n'existe pas "<<std::endl;
+    }
 }
 
 void instruction::deplaceMaison(coordonnee src, coordonnee dst){

@@ -17,8 +17,10 @@ bool Maison::operator==(Maison const & m){
 
 void Maison::deplaceRoutes(coordonnee avant,coordonnee apres){
 	for(auto &c: _routes){
-		if(c==avant)c=apres;
-		break;
+		if(c==avant){
+            c=apres;
+		    break;
+        }
 	}
 }
 
