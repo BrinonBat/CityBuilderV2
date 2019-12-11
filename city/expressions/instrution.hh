@@ -38,6 +38,8 @@ public:
 	void deplaceMaison(int src, coordonnee dst); // déplace la maison numero src aux coordonnées dst
 	void deplaceMaison(coordonnee src, coordonnee dst); // déplace la maison située à src aux coordonnées dst
 
+    void voisinage(int i);//affiche les maisons qui on un arc sortant vers la maison d'indice i
+
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
 
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true

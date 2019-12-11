@@ -86,6 +86,22 @@ void instruction::deplaceMaison(coordonnee src, coordonnee dst){
 
 }
 
+void instruction::voisinage(int i){
+    if(i<(int)_maisons.size() && i>-1){
+        if (_maisons[i].getRoute().size()>0){
+            std::cout << "voisinage " << i << " - ";
+            for (auto const &j : _maisons[i].getRoute()){
+                std::cout<<j<<" distance relative 1";
+            }
+            std::cout<<std::endl;
+
+        }else{
+            std::cout<<"La maison "+std::to_string(i)+" n'a pas de voisins"<<std::endl;
+        }
+    }
+}
+
+
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){
         if(_maisons[i].getCoord()==c){

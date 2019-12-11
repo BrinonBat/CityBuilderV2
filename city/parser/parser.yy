@@ -159,11 +159,11 @@ traitement:
             ville.orienterMaison($2,$3);
         }
         | orientation coordonnee {
-            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+            std::cout<<"Orientation de Maison"<<$2<<" - "
                 <<ville.getMaisons()[ville.indiceMaison($2)].getOrientation()<<std::endl;
         }
         | orientation indice {
-            std::cout<<"\nOrientation de Maison"<<$2<<" - "
+            std::cout<<"Orientation de Maison"<<$2<<" - "
                 <<ville.getMaisons()[$2].getOrientation()<<std::endl;
         }
         | destroy coordonnee {
@@ -199,13 +199,14 @@ traitement:
 			ville.deplaceMaison($2,$4);
         }
         | position indice {
-            std::cout<<"position indice"<<std::endl;
+            std::cout<<"Position maison["<<$2<<"] ";
+            std::cout<<ville.getMaisons()[$2].getCoord()<<std::endl;
         }
         | voisinage coordonnee {
-            std::cout<<"voisinage indice"<<std::endl;
+            ville.voisinage(ville.indiceMaison($2));
         }
         | voisinage indice {
-            std::cout<<"voisinage indice"<<std::endl;
+            ville.voisinage($2);
         }
 
 senshoraire:
@@ -228,7 +229,6 @@ coordonnee:
             $$._x = $2;
             $$._y = $4;
             $$._z = $6;
-            //std::cout<<$$;
             }
 
 operation:

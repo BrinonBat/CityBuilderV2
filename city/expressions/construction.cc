@@ -36,7 +36,7 @@ void Maison::sortieflux(std::ostream & os)const{
     os<<"x: "+std::to_string(_coord._x)+" y: "+std::to_string(_coord._y)+" z: "+std::to_string(_coord._z)+"\n";
     os<<"\t\tRoutes:\n";
     for(auto const & i:_routes){
-        os << "\t\t"<<"x: " + std::to_string(i._x) + " y: " + std::to_string(i._y) + " z: " + std::to_string(i._z) + "\n";
+        os << "\t\t"<<i;
     }
 }
 std::ostream &operator<<(std::ostream &os, Maison const &m){
@@ -44,7 +44,7 @@ std::ostream &operator<<(std::ostream &os, Maison const &m){
     return os;
 }
 std::ostream &operator<<(std::ostream &os, coordonnee c){
-    os<<"("<<c._x<<","<<c._y<<","<<c._z<<")";
+    os<<"("+std::to_string(c._x)+","+std::to_string(c._y)+","+std::to_string(c._z)+")";
     return os;
 }
 void Maison::ajoutRoute(coordonnee c){
