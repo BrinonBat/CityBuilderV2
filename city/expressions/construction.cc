@@ -14,6 +14,14 @@ Maison::Maison(int r):_orientation(90){
 bool Maison::operator==(Maison const & m){
     return _coord==m.getCoord();
 }
+
+void Maison::deplaceRoutes(coordonnee avant,coordonnee apres){
+	for(auto &c: _routes){
+		if(c==avant)c=apres;
+		break;
+	}
+}
+
 bool Maison::dejaRelie(coordonnee const &c)const{
     for(auto const &i:_routes){
         if(i==c){
@@ -43,4 +51,10 @@ void Maison::ajoutRoute(coordonnee c){
     }else{
         std::cout<<"Maison "<<(*this)<<"possède déjà une route vers cette maison"<<std::endl;
     }
+}
+void Maison::retireRoute(coordonnee c){
+	auto it=std::find(_routes.begin(),_routes.end(),c);
+	if(it!=_routes.end()){
+		_routes.erase(it);
+	}
 }

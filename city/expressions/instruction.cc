@@ -1,27 +1,35 @@
 #include "instrution.hh"
-bool instruction::estoccupe(coordonnee c){
-    for (auto &i : _maisons)
-    {
-        if (i.getCoord()==c){
-            return true;
-        }
-    }
-    return false;
+bool instruction::estOccupe(coordonnee c){
+	if(existe(c)){
+	    for (auto &i : _maisons)
+	    {
+	        if (i.getCoord()==c){
+	            return true;
+	        }
+	    }
+	}
+	    return false;
 }
+bool instruction::existe(coordonnee c){
+	// if dans le graphe
+	return true;
+	//else return false
+}
+
 void instruction::ajoutMaison(){
     Maison m(_rayon);
-    if(!estoccupe(m.getCoord())){
+    if(!estOccupe(m.getCoord())){
         _nbsommet++;
         _maisons.push_back(m);
     }
 
 }
 void  instruction::ajoutMaison(coordonnee c){
-    if(!estoccupe(c)){
+    if(!estOccupe(c)){
          _nbsommet++;
         _maisons.push_back(Maison(c));
     }
-    
+
 }
 
 void instruction::tournerMaison(int i, bool horaire){
@@ -30,7 +38,7 @@ void instruction::tournerMaison(int i, bool horaire){
     }else{
         _maisons[i - 1].setOrientation(_maisons[i - 1].getOrientation() - 60);
     }
-}        
+}
 void instruction::tournerMaison(coordonnee c, bool horaire){
     if (horaire){
         _maisons[indiceMaison(c)].setOrientation(_maisons[indiceMaison(c)].getOrientation() + 60);
@@ -41,17 +49,19 @@ void instruction::tournerMaison(coordonnee c, bool horaire){
 }
 void instruction::orienterMaison(int i,int r){
     _maisons[i - 1].setOrientation(r);
-}                   
+}
 void instruction::orienterMaison(coordonnee c, int r){
     _maisons[indiceMaison(c)].setOrientation(r);
-}              
+}
 
 void instruction::ajoutRoute(coordonnee src,coordonnee dst){
-    for(auto & i:_maisons){
-        if(i.getCoord()==src){
-            i.ajoutRoute(dst);
-        }
-    }
+	if(estOccupe(dst)){
+		for(auto & i:_maisons){
+	        if(i.getCoord()==src){
+	            i.ajoutRoute(dst);
+	        }
+	    }
+	}
 }
 void instruction::ajoutRoute(int src, coordonnee dst){
     _maisons[src-1].ajoutRoute(dst);
@@ -67,6 +77,58 @@ void instruction::ajoutRoute(int src, int dst){
     _maisons[src-1].ajoutRoute(_maisons[dst-1].getCoord());
 }
 
+void instruction::detruireMaison(int i){
+	if((unsigned int)i<=_maisons.size()){
+		//suppression des routes sortantes
+		_maisons[i-1].clearRoutes();
+		//suppression des routes entrantes
+		for(auto &m : _maisons){
+			m.retireRoute(_maisons[i-1].getCoord());
+		}
+		//suppression de la maison
+		_maisons.erase(_maisons.begin()+(i-1));
+	}
+}
+
+void instruction::detruireMaison(coordonnee c){
+	if(estOccupe(c)){
+		int ind=indiceMaison(c);
+		detruireMaison(ind);
+	}
+}
+
+void instruction::detruireRoute(int src,int dst){
+	_maisons[src-1].retireRoute(_maisons[dst-1].getCoord());
+}
+void instruction::detruireRoute(int src, coordonnee dst){
+	_maisons[src-1].retireRoute(dst);
+}
+void instruction::detruireRoute(coordonnee src, int dst){
+	int ind=indiceMaison(src);
+    _maisons[ind].retireRoute(_maisons[dst-1].getCoord());
+}
+void instruction::detruireRoute(coordonnee src, coordonnee dst){
+	int ind=indiceMaison(src);
+	_maisons[ind].retireRoute(dst);
+}
+
+void instruction::deplaceMaison(int src, coordonnee dst){
+	if((unsigned int)src<=_maisons.size())
+		deplaceMaison(_maisons[src-1].getCoord(),dst);
+}
+
+void instruction::deplaceMaison(coordonnee src, coordonnee dst){
+	if(!estOccupe(dst)){
+		//redirection des routes
+		for(auto &m : _maisons){
+			m.deplaceRoutes(src,dst);
+		}
+		//déplacement de la maison
+		_maisons[indiceMaison(src)].setCoord(dst);
+	}
+
+}
+
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){
         if(_maisons[i].getCoord()==c){
@@ -75,7 +137,7 @@ int instruction::indiceMaison(coordonnee c){
     }
     return -1;
 }
-// 
+
 void instruction::exec(int rayon){
     _rayon=rayon;
     if(!_estConstruit){

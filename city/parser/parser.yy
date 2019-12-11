@@ -61,7 +61,7 @@
 %type <int>             operation indice
 %type <coordonnee>      coordonnee
 %type<bool>             senshoraire
-%type<std::string>      traitement traitements 
+%type<std::string>      traitement traitements
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -145,11 +145,11 @@ traitement:
         | turn coordonnee senshoraire {
             std::cout<<"Tourner"<<std::endl;
             ville.tournerMaison($2,$3);
-        } 
+        }
         | turn indice senshoraire {
             std::cout<<"Tourner"<<std::endl;
             ville.tournerMaison($2,$3);
-        } 
+        }
         | orienter coordonnee operation degree {
             std::cout<<"Orienter"<<std::endl;
             ville.orienterMaison($2,$3);
@@ -168,37 +168,45 @@ traitement:
         }
         | destroy coordonnee {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireMaison($2);
         }
         | destroy indice {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireMaison($2);
         }
         | destroy coordonnee arrow coordonnee {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireRoute($2,$4);
         }
         | destroy coordonnee arrow indice {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireRoute($2,$4);
         }
         | destroy indice arrow coordonnee {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireRoute($2,$4);
         }
         | destroy indice arrow indice {
             std::cout<<"Detruire"<<std::endl;
+			ville.detruireRoute($2,$4);
         }
         | deplacer coordonnee arrow coordonnee {
             std::cout<<"Deplacer"<<std::endl;
+			ville.deplaceMaison($2,$4);
         }
         | deplacer indice arrow coordonnee {
             std::cout<<"Deplacer"<<std::endl;
+			ville.deplaceMaison($2,$4);
         }
         | position indice {
             std::cout<<"position indice"<<std::endl;
-        } 
+        }
         | voisinage coordonnee {
             std::cout<<"voisinage indice"<<std::endl;
-        } 
+        }
         | voisinage indice {
             std::cout<<"voisinage indice"<<std::endl;
-        } 
+        }
 
 senshoraire:
     horaire{
