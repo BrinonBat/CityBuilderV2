@@ -24,6 +24,20 @@ void instruction::ajoutMaison(){
     }
 
 }
+void instruction::ajoutMaison(std::string s){
+	//verification que le nom n'est pas pris
+	bool estPris(false);
+	for(auto &m : _maisons){
+		if(m.getNom()==s)estPris=true;
+	}
+	if(!estPris){
+		//ajout de la maison & ajout du nom
+		ajoutMaison();
+		_maisons.back().setNom(s);
+	}else
+		std::cout<<"le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
+}
+
 void  instruction::ajoutMaison(coordonnee c){
     if(!estOccupe(c)){
          _nbsommet++;
@@ -31,7 +45,19 @@ void  instruction::ajoutMaison(coordonnee c){
     }
 
 }
-
+void instruction::ajoutMaison(coordonnee c,std::string s){
+	//verification que le nom n'est pas pris
+	bool estPris(false);
+	for(auto &m : _maisons){
+		if(m.getNom()==s)estPris=true;
+	}
+	if(!estPris){
+		//ajout de la maison & ajout du nom
+		ajoutMaison(c);
+		_maisons.back().setNom(s);
+	}else
+		std::cout<<"le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
+}
 void instruction::tournerMaison(int i, bool horaire){
     if(horaire){
         _maisons[i].setOrientation(_maisons[i].getOrientation()+60);
@@ -91,10 +117,13 @@ void instruction::voisinage(int i){
         if (_maisons[i].getRoute().size()>0){
             std::cout << "voisinage " << i << " - ";
             for (auto const &j : _maisons[i].getRoute()){
-                std::cout<<j<<" distance relative 1";
+                std::cout<<j<<" distance relative -> ";
+				std::cout<<((	(std::abs(_maisons[i].getCoord()._x - j._x))
+								+(std::abs(_maisons[i].getCoord()._y - j._y))
+						 		+(std::abs(_maisons[i].getCoord()._z - j._z))
+							) / 2) <<std::endl;
             }
             std::cout<<std::endl;
-
         }else{
             std::cout<<"La maison "+std::to_string(i)+" n'a pas de voisins"<<std::endl;
         }

@@ -2,7 +2,7 @@
 #include "construction.hh"
 #include "graphe.hh"
 #include <vector>
-//class qui contient les instruction de construction qui est lu dans le parser
+//classe qui contient les instruction de construction qui est lu dans le parser
 //elle contient le graphe/matrice d'adjacence et la liste des maisons
 class instruction{
 private:
@@ -24,8 +24,10 @@ public:
     bool estOccupe(coordonnee c);//retourne true si cet emplacement est occupé
 	bool existe(coordonnee c); //retourne true si l'emplacement est présent sur le graphe
 	void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
+	void ajoutMaison(std::string s);//ajout d'une maison nommée s à une position aléatoire
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
-    void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
+	void ajoutMaison(coordonnee c,std::string s);//ajout d'une maison nommée s avec coord
+	void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
     void orienterMaison(int i,int r);//orienter maison indice i a tel degree
 
     //ajout route de maison indice src a maison indice dst
@@ -38,12 +40,11 @@ public:
 	void deplaceMaison(int src, coordonnee dst); // déplace la maison numero src aux coordonnées dst
 	void deplaceMaison(coordonnee src, coordonnee dst); // déplace la maison située à src aux coordonnées dst
 
-    void voisinage(int i);//affiche les maisons qui on un arc sortant vers la maison d'indice i
+    void voisinage(int i);//affiche les maisons qui ont un arc sortant vers la maison d'indice i
 
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
 
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
-
 
     void affichageVille();
 };

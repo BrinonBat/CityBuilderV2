@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <string>
 struct coordonnee{
     int _x,_y,_z;
     bool operator==(coordonnee const &c)const{
@@ -15,17 +16,19 @@ private:
     coordonnee _coord;
     int _orientation; // orientation en degrée mod 360 de la maison
     std::vector<coordonnee> _routes;
+	std::string _nom;
 
 public:
 	//constructeur
     Maison(coordonnee c):_coord(c),_orientation(90){}
     Maison(int r);//r est le rayon du graphe
-
     coordonnee getCoord()const{return _coord;}
 	void setCoord(coordonnee nouv){_coord=nouv;}
     std::vector<coordonnee> getRoute()const{return _routes;}
     int getOrientation()const{return _orientation;}
     void setOrientation(int o){_orientation=(o%360);}
+	void setNom(std::string const & s){_nom=s;}
+	std::string getNom()const{return _nom;}
 
 	void deplaceRoutes(coordonnee avant,coordonnee apres);
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
