@@ -40,6 +40,8 @@ fin return token::END;
 "Position" return token::position;
 "Voisinage" return token::voisinage;
 "maison" return token::indmaison;
+"Coloriser" return token::coloriser;
+"Couleur" return token::couleur;
 
 "+" return '+';
 "*" return '*';
@@ -76,6 +78,10 @@ fin return token::END;
 ([a-z][a-zA-Z0-9_]*)    {
     yylval->build<std::string>(YYText());
 	return token::variable;
+}
+(#[a-fA-F0-9]{6})   {
+     yylval->build<std::string>(YYText());
+	return token::couleurhexa;
 }
 
 "\n"          {

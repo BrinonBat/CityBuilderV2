@@ -43,6 +43,9 @@ public:
 
     void voisinage(int i);//affiche les maisons qui ont un arc sortant vers la maison d'indice i
 
+    void coloriser(int i,std::string coul);//colorise la maison d'indice i de la couleur coul
+    void afficheCouleur(int i);//affiche la couleur de la maison d'indice i de la forme (255,255,255)
+
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
     int indiceMaison(std::string s);//retourne l'indice de la maison avec ce nom
 

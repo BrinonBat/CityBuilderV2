@@ -16,7 +16,7 @@ private:
     coordonnee _coord;
     int _orientation; // orientation en degrée mod 360 de la maison
     std::vector<coordonnee> _routes;
-	std::string _nom;
+	std::string _nom,_couleur;
 
 public:
 	//constructeur
@@ -34,7 +34,10 @@ public:
     void setNom(std::string const & s){_nom=s;}
 	std::string getNom()const{return _nom;}
 
-	void deplaceRoutes(coordonnee avant,coordonnee apres);
+    void setColor(std::string const &s) { _couleur = s; }
+    std::string getColor() const { return _couleur; }
+
+    void deplaceRoutes(coordonnee avant,coordonnee apres);
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
 	void clearRoutes(){_routes.clear();}

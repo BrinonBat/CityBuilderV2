@@ -1,4 +1,5 @@
 #include "instrution.hh"
+#include <sstream>
 bool instruction::estOccupe(coordonnee c){
 	if(existe(c)){
 	    for (auto &i : _maisons)
@@ -116,7 +117,7 @@ void instruction::deplaceMaison(int src, coordonnee dst){
 	if((unsigned int)src<_maisons.size()&& src>-1){
 		deplaceMaison(_maisons[src].getCoord(),dst);
     }else{
-        std::cout<<"L'indice "+std::to_string(src)+" n'existe pas "<<std::endl;
+        std::cout<<"Erreur L'indice "+std::to_string(src)+" n'existe pas "<<std::endl;
     }
 }
 
@@ -149,6 +150,36 @@ void instruction::voisinage(int i){
     }
 }
 
+void instruction::coloriser(int i,std::string coul){
+    if((unsigned int)i<_maisons.size()&& i>-1){
+        _maisons[i].setColor(coul);
+        std::cout<<"Colorisation de la maison"<<std::endl;
+    }else{
+        std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
+    }
+
+}
+
+void instruction::afficheCouleur(int i){
+    if ((unsigned int)i < _maisons.size() && i > -1){
+        std::string rouge, vert, bleu;
+        rouge = _maisons[i].getColor().substr(1, 2);
+        vert = _maisons[i].getColor().substr(3, 2);
+        bleu = _maisons[i].getColor().substr(5, 2);
+        unsigned int r,v,b;
+        std::stringstream ss;
+        ss << std::hex<<rouge;
+        ss >> r;ss.clear();
+        ss << std::hex<<vert;
+        ss >> v;ss.clear();
+        ss << std::hex << bleu;
+        ss >> b;
+        std::cout << "La couleur de la Maison["+std::to_string(i+1)+"] est ("+std::to_string(r)+","+std::to_string(v)+","+std::to_string(b)+")" << std::endl;
+    }
+    else{
+        std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
+    }
+}
 
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){

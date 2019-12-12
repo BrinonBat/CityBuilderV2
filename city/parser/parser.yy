@@ -58,7 +58,8 @@
 %token                  voisinage
 %token                  indmaison
 %token                  degree
-%token<std::string>		nom variable
+%token                  coloriser couleur
+%token<std::string>		nom variable couleurhexa
 
 %type <int>             indice expression
 %type<ExpressionPtr>    operation
@@ -289,6 +290,24 @@ traitement:
             ville.voisinage(ville.indiceMaison($2));
         }
         | affectation {
+        }
+        | coloriser coordonnee couleurhexa {
+            ville.coloriser(ville.indiceMaison($2),$3);
+        }
+        | coloriser indice couleurhexa {
+            ville.coloriser($2,$3);
+        }
+        | coloriser nom couleurhexa {
+            ville.coloriser(ville.indiceMaison($2),$3);
+        }
+        | couleur coordonnee {
+            ville.afficheCouleur(ville.indiceMaison($2));
+        }
+        | couleur indice {
+            ville.afficheCouleur($2);
+        }
+        | couleur nom {
+            ville.afficheCouleur(ville.indiceMaison($2));
         }
 
 senshoraire:
