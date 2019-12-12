@@ -42,7 +42,9 @@ public:
 	void deplaceMaison(coordonnee src, coordonnee dst); // déplace la maison située à src aux coordonnées dst
 
     void voisinage(int i);//affiche les maisons qui ont un arc sortant vers la maison d'indice i
-
+	void voisin(int pos, int i); // place un voisin à une distance i de la maison n°pos
+	void voisin(coordonnee c, int i); // place un voisin à une distance i de la maison située en c
+	void voisin(std::string s, int i); // place un voisin à une distance i de la maison nommée s
     std::string intTohexa(int r,int v, int b);//transforme 3 int en une chaine hexadecimal
     void coloriser(int i,std::string coul);//colorise la maison d'indice i de la couleur coul
     void afficheCouleur(int i);//affiche la couleur de la maison d'indice i de la forme (255,255,255)
@@ -55,4 +57,3 @@ public:
 
     void affichageVille();
 };
-

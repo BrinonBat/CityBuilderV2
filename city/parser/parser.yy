@@ -324,7 +324,15 @@ traitement:
         | couleur nom {
             ville.afficheCouleur(ville.indiceMaison($2));
         }
-
+		| voisin coordonnee expression {
+			ville.voisin($2,$3);
+		}
+		| voisin indice expression {
+			ville.voisin($2,$3);
+		}
+		| voisin nom expression {
+			ville.voisin($2,$3);
+		}
 senshoraire:
     horaire{
         std::cout<<"horaire";

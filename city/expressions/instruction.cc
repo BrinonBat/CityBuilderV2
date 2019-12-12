@@ -12,12 +12,14 @@ bool instruction::estOccupe(coordonnee c){
 	    return false;
 }
 bool instruction::existe(coordonnee c){
-	for(auto const & i:_maisons){
+	/*for(auto const & i:_maisons){
         if(i.getCoord()==c){
             return true;
         }
     }
 	return false;
+	*/
+	return true;
 }
 
 void instruction::ajoutMaison(std::string s){
@@ -28,7 +30,7 @@ void instruction::ajoutMaison(std::string s){
 	}
     std::cout<<std::endl;
 	if(!estPris){
-		//ajout de la maison & ajout du nom 
+		//ajout de la maison & ajout du nom
         Maison m(_rayon,s);
         if (!estOccupe(m.getCoord()))
         {
@@ -109,7 +111,7 @@ void instruction::detruireRoute(int src,int dst){
         _maisons[src].retireRoute(_maisons[dst].getCoord());
     else
         std::cout<<"Erreur detruire route la maison d'entrée ou de sortie n'existe pas src:"<<src<<" dst:"<<dst<<std::endl;
-     
+
 }
 
 
@@ -149,6 +151,29 @@ void instruction::voisinage(int i){
         }
     }
 }
+void instruction::voisin(int pos, int i){
+	if ((unsigned int)pos < _maisons.size() && pos > -1){
+		Maison nouv(i,_maisons[pos].getCoord(),"");
+		while(!existe(nouv.getCoord())){
+			detruireMaison(_maisons.size()-1);
+			Maison nouv(i,_maisons[pos].getCoord(),"");
+		}
+		_maisons.push_back(nouv);
+		ajoutRoute(pos,_maisons.size()-1);
+		ajoutRoute(_maisons.size()-1,pos);
+		std::cout<<_maisons.back()<<std::endl;
+	}else{
+		std::cout<<"numero de maison invalide"<<std::endl;
+	}
+}
+void instruction::voisin(coordonnee c, int i){
+	voisin(indiceMaison(c),i);
+}
+
+void instruction::voisin(std::string s, int i){
+	voisin(indiceMaison(s),i);
+}
+
 std::string instruction::intTohexa(int r,int v, int b){
     std::stringstream ss;
     ss << std::hex << r;
