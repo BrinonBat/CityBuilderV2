@@ -8,11 +8,20 @@ ExpressionBinaire::ExpressionBinaire(ExpressionPtr gauche, ExpressionPtr droite,
 
 double ExpressionBinaire::calculer(const Contexte& contexte) const {
     double gauche = _gauche->calculer(contexte), droite = _droite->calculer(contexte);
-    switch (_op) {
-        case OperateurBinaire::plus: return gauche + droite;
-        case OperateurBinaire::moins: return gauche - droite;
-        case OperateurBinaire::divise: return gauche / droite;
-        case OperateurBinaire::multiplie: return gauche * droite;
-        default: return 0;
+    switch (_op){
+    case OperateurBinaire::plus:
+        return gauche + droite;
+    case OperateurBinaire::moins:
+        return gauche - droite;
+    case OperateurBinaire::divise:
+    {
+        if (droite == 0)
+            throw std::domain_error("division par 0");
+        return gauche / droite;
+    }
+    case OperateurBinaire::multiplie:
+        return gauche * droite;
+    default:
+        return 0;
     }
 }

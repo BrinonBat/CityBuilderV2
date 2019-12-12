@@ -68,9 +68,14 @@ fin return token::END;
     return token::com;
 }
 
-[A-Z][a-zA-Z0-9_]* {
+([A-Z][a-zA-Z0-9_]*) {
 	yylval->build<std::string>(YYText());
 	return token::nom;
+}
+
+([a-z][a-zA-Z0-9_]*)    {
+    yylval->build<std::string>(YYText());
+	return token::variable;
 }
 
 "\n"          {

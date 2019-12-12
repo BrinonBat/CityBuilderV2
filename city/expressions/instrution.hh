@@ -23,7 +23,8 @@ public:
 
     bool estOccupe(coordonnee c);//retourne true si cet emplacement est occupé
 	bool existe(coordonnee c); //retourne true si l'emplacement est présent sur le graphe
-	void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
+    bool existe(int i); //retourne true si l'indice est présent sur le graphe
+    void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
 	void ajoutMaison(std::string s);//ajout d'une maison nommée s à une position aléatoire
     void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
 	void ajoutMaison(coordonnee c,std::string s);//ajout d'une maison nommée s avec coord
@@ -43,8 +44,10 @@ public:
     void voisinage(int i);//affiche les maisons qui ont un arc sortant vers la maison d'indice i
 
     int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
+    int indiceMaison(std::string s);//retourne l'indice de la maison avec ce nom
 
     void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
 
     void affichageVille();
 };
+
