@@ -149,7 +149,16 @@ void instruction::voisinage(int i){
         }
     }
 }
+std::string instruction::intTohexa(int r,int v, int b){
+    std::stringstream ss;
+    ss << std::hex << r;
+    ss << std::hex << v;
+    ss << std::hex << b;
 
+    std::string s(ss.str());
+    std::cout<<"#"+s<<std::endl;
+    return "#"+s;
+}
 void instruction::coloriser(int i,std::string coul){
     if((unsigned int)i<_maisons.size()&& i>-1){
         _maisons[i].setColor(coul);

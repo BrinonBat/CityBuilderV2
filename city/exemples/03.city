@@ -10,4 +10,6 @@ Construire (6){
     %%Affiche erreur il n'y a pas de maison en (0,0,0)
     Coloriser maison[1] #FFFFFF
     Couleur maison[1]
+    Coloriser i #000000
+    Coloriser i (3*4,100-9,60+5)
 }

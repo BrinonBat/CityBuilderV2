@@ -42,6 +42,7 @@ fin return token::END;
 "maison" return token::indmaison;
 "Coloriser" return token::coloriser;
 "Couleur" return token::couleur;
+"Voisin" return token::voisin;
 
 "+" return '+';
 "*" return '*';

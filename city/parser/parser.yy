@@ -55,7 +55,7 @@
 %token                  destroy
 %token                  deplacer
 %token                  position
-%token                  voisinage
+%token                  voisinage voisin
 %token                  indmaison
 %token                  degree
 %token                  coloriser couleur
@@ -299,6 +299,21 @@ traitement:
         }
         | coloriser nom couleurhexa {
             ville.coloriser(ville.indiceMaison($2),$3);
+        }
+        | coloriser variable couleurhexa {
+            ville.coloriser(((int)driver.getVariable($2))-1,$3);
+        }
+        | coloriser coordonnee '(' expression ',' expression ',' expression ')' {
+            ville.coloriser(ville.indiceMaison($2),ville.intTohexa($4,$6,$8));
+        }
+        | coloriser indice '(' expression ',' expression ',' expression ')' {
+            ville.coloriser($2,ville.intTohexa($4,$6,$8));
+        }
+        | coloriser nom '(' expression ',' expression ',' expression ')' {
+            ville.coloriser(ville.indiceMaison($2),ville.intTohexa($4,$6,$8));
+        }
+        | coloriser variable '(' expression ',' expression ',' expression ')' {
+            ville.coloriser(((int)driver.getVariable($2))-1,ville.intTohexa($4,$6,$8));
         }
         | couleur coordonnee {
             ville.afficheCouleur(ville.indiceMaison($2));
