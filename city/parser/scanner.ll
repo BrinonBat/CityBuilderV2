@@ -40,6 +40,9 @@ fin return token::END;
 "Position" return token::position;
 "Voisinage" return token::voisinage;
 "maison" return token::indmaison;
+"Coloriser" return token::coloriser;
+"Couleur" return token::couleur;
+"Voisin" return token::voisin;
 
 "+" return '+';
 "*" return '*';
@@ -58,7 +61,7 @@ fin return token::END;
 "°" return token::degree;
 
 [0-9]+      {
-    yylval->build<int>(std::atoi(YYText()));
+    yylval->build<float>(std::atoi(YYText()));
     return token::NUMBER;
 }
 (%%.*)$      {
@@ -68,9 +71,18 @@ fin return token::END;
     return token::com;
 }
 
-[A-Z][a-zA-Z0-9_]* {
+([A-Z][a-zA-Z0-9_]*) {
 	yylval->build<std::string>(YYText());
 	return token::nom;
+}
+
+([a-z][a-zA-Z0-9_]*)    {
+    yylval->build<std::string>(YYText());
+	return token::variable;
+}
+(#[a-fA-F0-9]{6})   {
+     yylval->build<std::string>(YYText());
+	return token::couleurhexa;
 }
 
 "\n"          {

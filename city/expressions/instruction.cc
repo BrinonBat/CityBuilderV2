@@ -1,4 +1,5 @@
 #include "instrution.hh"
+#include <sstream>
 bool instruction::estOccupe(coordonnee c){
 	if(existe(c)){
 	    for (auto &i : _maisons)
@@ -11,67 +12,83 @@ bool instruction::estOccupe(coordonnee c){
 	    return false;
 }
 bool instruction::existe(coordonnee c){
-	// if dans le graphe
-	return true;
-	//else return false
-}
-
-void instruction::ajoutMaison(){
-    Maison m(_rayon);
-    if(!estOccupe(m.getCoord())){
-        _nbsommet++;
-        _maisons.push_back(m);
+	for(auto const & i:_maisons){
+        if(i.getCoord()==c){
+            return true;
+        }
     }
-
+	return false;
 }
+
 void instruction::ajoutMaison(std::string s){
 	//verification que le nom n'est pas pris
 	bool estPris(false);
 	for(auto &m : _maisons){
-		if(m.getNom()==s)estPris=true;
+		if(m.getNom()==s && !m.getNom().empty())estPris=true;
 	}
+    std::cout<<std::endl;
 	if(!estPris){
-		//ajout de la maison & ajout du nom
-		ajoutMaison();
-		_maisons.back().setNom(s);
-	}else
-		std::cout<<"le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
+		//ajout de la maison & ajout du nom 
+        Maison m(_rayon,s);
+        if (!estOccupe(m.getCoord()))
+        {
+            _nbsommet++;
+            _maisons.push_back(m);
+        }
+    }else
+		std::cout<<"Erreur le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
 }
 
-void  instruction::ajoutMaison(coordonnee c){
-    if(!estOccupe(c)){
-         _nbsommet++;
-        _maisons.push_back(Maison(c));
-    }
-
-}
 void instruction::ajoutMaison(coordonnee c,std::string s){
 	//verification que le nom n'est pas pris
 	bool estPris(false);
 	for(auto &m : _maisons){
-		if(m.getNom()==s)estPris=true;
-	}
-	if(!estPris){
+        if (m.getNom() == s && !m.getNom().empty())
+            estPris = true;
+    }
+    std::cout << std::endl;
+    if(!estPris){
 		//ajout de la maison & ajout du nom
-		ajoutMaison(c);
-		_maisons.back().setNom(s);
-	}else
-		std::cout<<"le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
+        if (!estOccupe(c)) {
+            _nbsommet++;
+            _maisons.push_back(Maison(c,s));
+        }
+        else{
+            std::cout << "Erreur Cet emplacement " << c << " est déjà pris" << std::endl;
+        }
+    }else
+		std::cout<<"Erreur le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
 }
 void instruction::tournerMaison(int i, bool horaire){
-    if(horaire){
-        _maisons[i].setOrientation(_maisons[i].getOrientation()+60);
-    }else{
-        _maisons[i].setOrientation(_maisons[i].getOrientation() - 60);
+    if (i < (int)_maisons.size() && i > -1)
+    {
+        if (horaire)
+        {
+            _maisons[i].setOrientation(_maisons[i].getOrientation() + 60);
+        }
+        else
+        {
+            _maisons[i].setOrientation(_maisons[i].getOrientation() - 60);
+        }
+    } else{
+        std::cout << "Erreur la maison d'entrée à tourner n'existe pas " << std::endl;
     }
 }
 
 void instruction::orienterMaison(int i,int r){
-    _maisons[i].setOrientation(r);
+    if(i<(int)_maisons.size() && i>-1){
+        _maisons[i].setOrientation(r);
+    }else{
+        std::cout << "Erreur la maison d'entrée à orienter n'existe pas " << std::endl;
+    }
 }
 
 void instruction::ajoutRoute(int src, int dst){
-    _maisons[src].ajoutRoute(_maisons[dst].getCoord());
+    if ((unsigned int)src < _maisons.size() && src > -1 && dst < (int)_maisons.size() && dst > -1){
+        _maisons[src].ajoutRoute(_maisons[dst].getCoord());
+    }else{
+        std::cout << "Erreur ajoutRoute la maison d'entrée ou de sortie n'existe pas src:" << src << " dst:" << dst << std::endl;
+    }
 }
 
 void instruction::detruireMaison(int i){
@@ -88,15 +105,19 @@ void instruction::detruireMaison(int i){
 }
 
 void instruction::detruireRoute(int src,int dst){
-	_maisons[src].retireRoute(_maisons[dst].getCoord());
+    if ((unsigned int)src < _maisons.size() && src > -1 && dst<(int)_maisons.size() && dst>-1)
+        _maisons[src].retireRoute(_maisons[dst].getCoord());
+    else
+        std::cout<<"Erreur detruire route la maison d'entrée ou de sortie n'existe pas src:"<<src<<" dst:"<<dst<<std::endl;
+     
 }
 
 
 void instruction::deplaceMaison(int src, coordonnee dst){
-	if((unsigned int)src<_maisons.size()){
+	if((unsigned int)src<_maisons.size()&& src>-1){
 		deplaceMaison(_maisons[src].getCoord(),dst);
     }else{
-        std::cout<<"L'indice "+std::to_string(src)+" n'existe pas "<<std::endl;
+        std::cout<<"Erreur L'indice "+std::to_string(src)+" n'existe pas "<<std::endl;
     }
 }
 
@@ -123,13 +144,51 @@ void instruction::voisinage(int i){
 						 		+(std::abs(_maisons[i].getCoord()._z - j._z))
 							) / 2) <<std::endl;
             }
-            std::cout<<std::endl;
         }else{
             std::cout<<"La maison "+std::to_string(i)+" n'a pas de voisins"<<std::endl;
         }
     }
 }
+std::string instruction::intTohexa(int r,int v, int b){
+    std::stringstream ss;
+    ss << std::hex << r;
+    ss << std::hex << v;
+    ss << std::hex << b;
 
+    std::string s(ss.str());
+    std::cout<<"#"+s<<std::endl;
+    return "#"+s;
+}
+void instruction::coloriser(int i,std::string coul){
+    if((unsigned int)i<_maisons.size()&& i>-1){
+        _maisons[i].setColor(coul);
+        std::cout<<"Colorisation de la maison"<<std::endl;
+    }else{
+        std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
+    }
+
+}
+
+void instruction::afficheCouleur(int i){
+    if ((unsigned int)i < _maisons.size() && i > -1){
+        std::string rouge, vert, bleu;
+        rouge = _maisons[i].getColor().substr(1, 2);
+        vert = _maisons[i].getColor().substr(3, 2);
+        bleu = _maisons[i].getColor().substr(5, 2);
+        unsigned int r,v,b;
+        std::stringstream ss;
+        ss << std::hex<<rouge;
+        ss >> r;ss.clear();
+        ss << std::hex<<vert;
+        ss >> v;ss.clear();
+        ss << std::hex << bleu;
+        ss >> b;
+        std::cout << "La couleur de la Maison["+std::to_string(i+1)+"] est ("+std::to_string(r)+","+std::to_string(v)+","+std::to_string(b)+")" << std::endl;
+    }
+    else{
+        std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
+    }
+}
 
 int instruction::indiceMaison(coordonnee c){
     for(int i=0;i<(int)_maisons.size();i++){
@@ -137,13 +196,26 @@ int instruction::indiceMaison(coordonnee c){
             return i;
         }
     }
+    std::cout<<"Erreur Il n'y a pas de maison à ces coordonées "<<c<<std::endl;
     return -1;
 }
 
-void instruction::exec(int rayon){
-    _rayon=rayon;
+int instruction::indiceMaison(std::string s)
+{
+    for (int i = 0; i < (int)_maisons.size(); i++)
+    {
+        if (_maisons[i].getNom() == s)
+        {
+            return i;
+        }
+    }
+    std::cout << "Erreur Il n'y a pas de maison nommée ainsi " << s << std::endl;
+    return -1;
+}
+
+void instruction::exec(){
     if(!_estConstruit){
-        _graphe.setnbSommet((int)_maisons.size());
+         _graphe.setnbSommet((int)_maisons.size());
         _graphe.initMatrice();
         for(auto const & i:_maisons){
             for(auto const j:i.getRoute()){

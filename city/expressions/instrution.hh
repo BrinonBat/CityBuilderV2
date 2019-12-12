@@ -17,17 +17,18 @@ public:
     //accesseurs
     Graphe getGraphe()const{return _graphe;}
     int getRayon()const{return _rayon;}
+    void setRayon(int r) { _rayon=r; }
     int getNbsommet()const{return _nbsommet;}
+    bool estConstruit()const{return _estConstruit;}
     std::vector<Maison> getMaisons()const{return _maisons;}
 
 
     bool estOccupe(coordonnee c);//retourne true si cet emplacement est occupé
 	bool existe(coordonnee c); //retourne true si l'emplacement est présent sur le graphe
-	void ajoutMaison();//ajout d'une maison avec une position aléatoire dans la lsite
-	void ajoutMaison(std::string s);//ajout d'une maison nommée s à une position aléatoire
-    void ajoutMaison(coordonnee c);//ajout d'une maison avec coord dans la liste
-	void ajoutMaison(coordonnee c,std::string s);//ajout d'une maison nommée s avec coord
-	void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
+    bool existe(int i); //retourne true si l'indice est présent sur le graphe
+	void ajoutMaison(std::string s);//ajout d'une maison (nommée s || "") à une position aléatoire
+    void ajoutMaison(coordonnee c, std::string s); //ajout d'une maison (nommée s || "") avec coord
+    void tournerMaison(int i,bool horaire);//tourner maison d'indice i sens horaire
     void orienterMaison(int i,int r);//orienter maison indice i a tel degree
 
     //ajout route de maison indice src a maison indice dst
@@ -42,9 +43,16 @@ public:
 
     void voisinage(int i);//affiche les maisons qui ont un arc sortant vers la maison d'indice i
 
-    int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
+    std::string intTohexa(int r,int v, int b);//transforme 3 int en une chaine hexadecimal
+    void coloriser(int i,std::string coul);//colorise la maison d'indice i de la couleur coul
+    void afficheCouleur(int i);//affiche la couleur de la maison d'indice i de la forme (255,255,255)
 
-    void exec(int rayon);//construit _graphe en fonction de _maisons et set _estconstruit a true
+    int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données
+    int indiceMaison(std::string s);//retourne l'indice de la maison avec ce nom
+
+
+    void exec();//construit _graphe en fonction de _maisons et set _estconstruit a true
 
     void affichageVille();
 };
+

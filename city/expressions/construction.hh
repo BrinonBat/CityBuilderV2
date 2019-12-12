@@ -16,21 +16,28 @@ private:
     coordonnee _coord;
     int _orientation; // orientation en degrée mod 360 de la maison
     std::vector<coordonnee> _routes;
-	std::string _nom;
+	std::string _nom,_couleur;
 
 public:
 	//constructeur
-    Maison(coordonnee c):_coord(c),_orientation(90){}
-    Maison(int r);//r est le rayon du graphe
+    Maison(coordonnee c,std::string nom);
+    Maison(int r,std::string nom);//r est le rayon du graphe
+    
     coordonnee getCoord()const{return _coord;}
 	void setCoord(coordonnee nouv){_coord=nouv;}
+    
     std::vector<coordonnee> getRoute()const{return _routes;}
+    
     int getOrientation()const{return _orientation;}
     void setOrientation(int o){_orientation=(o%360);}
-	void setNom(std::string const & s){_nom=s;}
+	
+    void setNom(std::string const & s){_nom=s;}
 	std::string getNom()const{return _nom;}
 
-	void deplaceRoutes(coordonnee avant,coordonnee apres);
+    void setColor(std::string const &s) { _couleur = s; }
+    std::string getColor() const { return _couleur; }
+
+    void deplaceRoutes(coordonnee avant,coordonnee apres);
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
 	void clearRoutes(){_routes.clear();}
