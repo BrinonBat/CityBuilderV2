@@ -84,24 +84,19 @@ instruction:
     operation  {
         std::cout << "#-> " << $1 << std::endl;
     }
-    | build '{' NL traitements '}'{
-         // creation graphe taille 5
-        std::cout<<"Construire {"<<std::endl;
-        std::cout<<$4<<std::endl;
-        std::cout<<"}"<<std::endl;
-        ville.exec(5);
-
+    | build init NL traitements '}' {
+        std::cout<<"Construire "<<std::endl;
+        ville.exec();
     }
-    | build '(' expression ')' '{' NL traitements '}' {
-        // creation graphe de taille resultat operation
-        // si graphe existe deja change juste la taille graphe
-        std::cout<<"Construire ("<<$3<<"){ test"<<std::endl;
-        std::cout<<$7<<std::endl;
-        std::cout<<"}"<<std::endl;
-        ville.exec($3);
-
+init:
+    '(' expression ')' '{'{
+        ville.setRayon($2);
     }
-
+    | '{' {
+        if(!ville.estConstruit()){
+            ville.setRayon(5);
+        }
+    }
 traitements:
     traitement NL traitements{
 
@@ -115,7 +110,7 @@ traitement:
          maison {
             //construire maison à un emplacement aléatoire
                 std::cout<<"Maison ok"<<std::endl;
-                ville.ajoutMaison();
+                ville.ajoutMaison("");
         }
 		| maison nom{
 		   //construire maison à un emplacement aléatoire
@@ -125,7 +120,7 @@ traitement:
         | maison coordonnee {
             // construire maison selon coordonées
                 std::cout<<"Maison "<<$2<<std::endl;
-                ville.ajoutMaison($2);
+                ville.ajoutMaison($2,"");
         }
 		| maison nom coordonnee {
 			//construire maison nom selon coordonnées
@@ -178,7 +173,7 @@ traitement:
 
         }
         | com {
-            //std::cout<<"\t\tCommentaire"<<std::endl;
+            std::cout<<"----------------------------------------------Commentaire"<<std::endl;
         }
         | turn coordonnee senshoraire {
             std::cout<<"Tourner"<<std::endl;
@@ -217,15 +212,15 @@ traitement:
                 <<ville.getMaisons()[$2].getOrientation()<<std::endl;
         }
         | destroy coordonnee {
-            std::cout<<"Detruire "<<$2<<std::endl;
+            std::cout<<"Detruire maison "<<$2<<std::endl;
 			ville.detruireMaison(ville.indiceMaison($2));
         }
         | destroy indice {
-            std::cout<<"Detruire "<<$2<<std::endl;
+            std::cout<<"Detruire maison "<<$2<<std::endl;
 			ville.detruireMaison($2);
         }
         | destroy nom {
-            std::cout<<"Detruire "<<$2<<std::endl;
+            std::cout<<"Detruire maison "<<$2<<std::endl;
 			ville.detruireMaison(ville.indiceMaison($2));
         }
         | destroy coordonnee arrow coordonnee {
@@ -321,7 +316,6 @@ coordonnee:
 expression:
     operation {
         $$= static_cast<int>($1->calculer(driver.getContexte()));
-        std::cout<<"expressions : "<<$$<<std::endl;
     }
 
 affectation:

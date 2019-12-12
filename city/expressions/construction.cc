@@ -4,14 +4,18 @@
 #include<ctime>
 #include <iostream>
 
-Maison::Maison(int r):_orientation(90){
+Maison::Maison(int r,std::string nom):_orientation(90){
     std::srand(std::time(nullptr));
-    std::cout<<"r: "+std::to_string(r)<<std::endl;
     _coord._x = (rand() % (r * 2) + 1) - 5;
     _coord._z = (rand() % (r * 2) + 1) - 5;
     _coord._y = -_coord._x-_coord._z;
+    if(nom!=""){ _nom=nom;}
 }
-
+Maison::Maison(coordonnee c, std::string nom) : _coord(c), _orientation(90) {
+    if (nom != ""){
+        _nom = nom;
+    }
+}
 bool Maison::operator==(Maison const & m){
     return _coord==m.getCoord();
 }
@@ -34,7 +38,7 @@ bool Maison::dejaRelie(coordonnee const &c)const{
     return false;
 }
 void Maison::sortieflux(std::ostream & os)const{
-    os<<"x: "+std::to_string(_coord._x)+" y: "+std::to_string(_coord._y)+" z: "+std::to_string(_coord._z)+"\n";
+    os<<"Nom: "+_nom<<_coord;
     os<<"\t\tRoutes:\n";
     for(auto const & i:_routes){
         os << "\t\t"<<i;

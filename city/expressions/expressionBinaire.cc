@@ -1,5 +1,5 @@
 #include "expressionBinaire.hh"
-
+#include <math.h>
 
 ExpressionBinaire::ExpressionBinaire(ExpressionPtr gauche, ExpressionPtr droite, OperateurBinaire op):
     _gauche(gauche), _droite(droite), _op(op) {
@@ -17,7 +17,9 @@ double ExpressionBinaire::calculer(const Contexte& contexte) const {
     {
         if (droite == 0)
             throw std::domain_error("division par 0");
-        return gauche / droite;
+        double fractpart, intpart;
+        fractpart = modf((gauche / droite), &intpart); 
+        return ((fractpart<0.5)? intpart : intpart+1);
     }
     case OperateurBinaire::multiplie:
         return gauche * droite;
