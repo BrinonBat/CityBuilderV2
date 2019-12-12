@@ -58,7 +58,7 @@ fin return token::END;
 "°" return token::degree;
 
 [0-9]+      {
-    yylval->build<int>(std::atoi(YYText()));
+    yylval->build<float>(std::atoi(YYText()));
     return token::NUMBER;
 }
 (%%.*)$      {

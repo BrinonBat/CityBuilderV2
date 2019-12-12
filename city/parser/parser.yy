@@ -92,7 +92,7 @@ instruction:
         ville.exec(5);
 
     }
-    | build '(' NUMBER ')' '{' NL traitements '}' {
+    | build '(' expression ')' '{' NL traitements '}' {
         // creation graphe de taille resultat operation
         // si graphe existe deja change juste la taille graphe
         std::cout<<"Construire ("<<$3<<"){ test"<<std::endl;
@@ -320,7 +320,8 @@ coordonnee:
 
 expression:
     operation {
-        $$= (int)($1->calculer(driver.getContexte()));
+        $$= static_cast<int>($1->calculer(driver.getContexte()));
+        std::cout<<"expressions : "<<$$<<std::endl;
     }
 
 affectation:
