@@ -2,5 +2,7 @@ Construire (5){
     Maison
     Maison (0,0,0)
     Maison (2,-1,-1)
+	Maison Mudada (0,2,1)
+	Maison Mudada
     Route (0,0,0) -> (2,-1,-1)
 }

@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-
+#include <sstream>
 #define YY_NO_UNISTD_H
 
 using token = yy::Parser::token;
@@ -41,7 +41,6 @@ fin return token::END;
 "Voisinage" return token::voisinage;
 "maison" return token::indmaison;
 
-
 "+" return '+';
 "*" return '*';
 "-" return '-';
@@ -67,6 +66,11 @@ fin return token::END;
 }
 (%\/(.|\n)*\/%)   {
     return token::com;
+}
+
+[A-Z][a-zA-Z0-9_]* {
+	yylval->build<std::string>(YYText());
+	return token::nom;
 }
 
 "\n"          {

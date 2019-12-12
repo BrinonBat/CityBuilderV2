@@ -39,6 +39,7 @@ void Maison::sortieflux(std::ostream & os)const{
         os << "\t\t"<<i;
     }
 }
+
 std::ostream &operator<<(std::ostream &os, Maison const &m){
     m.sortieflux(os);
     return os;

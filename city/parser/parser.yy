@@ -57,6 +57,7 @@
 %token                  voisinage
 %token                  indmaison
 %token                  degree
+%token<std::string>		nom
 
 %type <int>             operation indice
 %type <coordonnee>      coordonnee
@@ -114,11 +115,21 @@ traitement:
                 std::cout<<"Maison ok"<<std::endl;
                 ville.ajoutMaison();
         }
-        | maison  coordonnee {
+		| maison nom{
+		   //construire maison à un emplacement aléatoire
+			   	std::cout<<"Maison nommée "<<std::endl;
+			   	ville.ajoutMaison($2);
+	   }
+        | maison coordonnee {
             // construire maison selon coordonées
                 std::cout<<"Maison "<<$2<<std::endl;
                 ville.ajoutMaison($2);
         }
+		| maison nom coordonnee {
+			//construire maison nom selon coordonnées
+				std::cout<<"Maison "<<$2<<" "<<$3<<std::endl;
+				ville.ajoutMaison($3,$2);
+		}
         | route coordonnee arrow coordonnee  {
             std::cout<<"Route  "<<$2<<" -> "<<$4<<std::endl;
             ville.ajoutRoute(ville.indiceMaison($2),ville.indiceMaison($4));
