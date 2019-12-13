@@ -16,17 +16,7 @@ Maison::Maison(coordonnee c, std::string nom) : _coord(c), _orientation(90) {
         _nom = nom;
     }
 }
-//retravailler la sécurité ici et les verifs
-Maison::Maison(int r,coordonnee c,std::string nom):_orientation(90){
-	std::srand(std::time(nullptr));
-    _coord._x = (rand() % (r * 2) + 1) - 5 + c._x;
-    _coord._z = (rand() % (r * 2) + 1) - 5 + c._z;
-    _coord._y = -_coord._x-_coord._z/* + c._y*/;
-	// !!! dépassement de terrain possible.
-	if (nom != ""){
-        _nom = nom;
-    }
-}
+
 
 bool Maison::operator==(Maison const & m){
     return _coord==m.getCoord();
@@ -50,10 +40,15 @@ bool Maison::dejaRelie(coordonnee const &c)const{
     return false;
 }
 void Maison::sortieflux(std::ostream & os)const{
-    os<<"Nom: "+_nom<<_coord;
-    os<<"\t\tRoutes:\n";
-    for(auto const & i:_routes){
-        os << "\t\t"<<i;
+    os<<"Nom: "+_nom+" Coordonées: "<<_coord<<std::endl;
+    if(_routes.size()>0){
+        os<<"\t\tRoutes:\n";
+        os << "\t\t\t";
+        for (auto const &i : _routes)
+        {
+            os<<"#->"<< i <<" ";
+        }
+        os<<"\n";
     }
 }
 
@@ -77,4 +72,29 @@ void Maison::retireRoute(coordonnee c){
 	if(it!=_routes.end()){
 		_routes.erase(it);
 	}
+}
+
+
+//-----------------------------------------------------------------------------------------------------------
+
+
+int distance(coordonnee c1,coordonnee c2){
+    return (std::abs(c2._x - c1._x)+(std::abs(c2._y - c1._y))+(std::abs(c2._z - c1._z))) / 2;
+}
+
+std::vector<coordonnee> range(int r,coordonnee c)
+{
+    std::vector<coordonnee> res;
+     for (int i = -r+c._x; i <= r+c._x; i++)
+    {
+        int max = ((-r < (-i - r)) ? (-i - r) : -r);
+        int min = ((r > (-i + r)) ? (-i + r) : r);
+        for (int j = max+c._y; j <= min+c._y; j++)
+        {
+            int k = -i - j;
+            coordonnee c;c._x=i;c._y=j;c._z=k;
+            res.push_back(c);
+        }
+    }
+    return res;
 }
