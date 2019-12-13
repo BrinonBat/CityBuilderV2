@@ -27,22 +27,32 @@ using token = yy::Parser::token;
 %}
 fin return token::END;
 
-"Construire" return token::build;
-"Maison" return token::maison;
-"Route" return token::route;
-"->" return token::arrow;
-"Tourner" return token::turn;
-"horaire" return token::horaire;
-"Orienter" return token::orienter;
-"Orientation" return token::orientation;
-"Detruire" return token::destroy;
-"Deplacer" return token::deplacer;
-"Position" return token::position;
-"Voisinage" return token::voisinage;
-"maison" return token::indmaison;
-"Coloriser" return token::coloriser;
-"Couleur" return token::couleur;
-"Voisin" return token::voisin;
+"Construire"    return token::build;
+"Maison"        return token::maison;
+"Route"         return token::route;
+"->"            return token::arrow;
+"Tourner"       return token::turn;
+"horaire"       return token::horaire;
+"Orienter"      return token::orienter;
+"Orientation"   return token::orientation;
+"Detruire"      return token::destroy;
+"Deplacer"      return token::deplacer;
+"Position"      return token::position;
+"Voisinage"     return token::voisinage;
+"maison"        return token::indmaison;
+"Coloriser"     return token::coloriser;
+"Couleur"       return token::couleur;
+"Voisin"        return token::voisin;
+
+"occupe"        return token::occupe;
+"vide"          return token::vide;
+"non"           return token::non;
+"Si"            return token::sicond;
+"Tant que"      return token::tantque;
+"Repeter"       return token::repeter;
+"void"          return token::fonctionvoid;
+"Sinon"         return token::sinon;
+"fois"          return token::fois;
 
 "+" return '+';
 "*" return '*';
