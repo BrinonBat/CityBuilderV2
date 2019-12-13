@@ -22,15 +22,15 @@ public:
 	//constructeur
     Maison(coordonnee c,std::string nom);
     Maison(int r,std::string nom);//r est le rayon du graphe
-    
+	Maison(int r,coordonnee c,std::string nom); //r=rayon autour de c
     coordonnee getCoord()const{return _coord;}
 	void setCoord(coordonnee nouv){_coord=nouv;}
-    
+
     std::vector<coordonnee> getRoute()const{return _routes;}
-    
+
     int getOrientation()const{return _orientation;}
     void setOrientation(int o){_orientation=(o%360);}
-	
+
     void setNom(std::string const & s){_nom=s;}
 	std::string getNom()const{return _nom;}
 

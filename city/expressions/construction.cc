@@ -16,6 +16,18 @@ Maison::Maison(coordonnee c, std::string nom) : _coord(c), _orientation(90) {
         _nom = nom;
     }
 }
+//retravailler la sécurité ici et les verifs
+Maison::Maison(int r,coordonnee c,std::string nom):_orientation(90){
+	std::srand(std::time(nullptr));
+    _coord._x = (rand() % (r * 2) + 1) - 5 + c._x;
+    _coord._z = (rand() % (r * 2) + 1) - 5 + c._z;
+    _coord._y = -_coord._x-_coord._z/* + c._y*/;
+	// !!! dépassement de terrain possible.
+	if (nom != ""){
+        _nom = nom;
+    }
+}
+
 bool Maison::operator==(Maison const & m){
     return _coord==m.getCoord();
 }
