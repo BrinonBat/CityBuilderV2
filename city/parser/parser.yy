@@ -61,6 +61,16 @@
 %token                  coloriser couleur
 %token<std::string>		nom variable couleurhexa
 
+%token<bool>            occupe vide 
+%token                  non
+%token                  sicond 
+%token                  tantque 
+%token                  repeter 
+%token                  fonctionvoid
+%token                  sinon 
+%token                  fois
+
+
 %type <int>             indice expression
 %type<ExpressionPtr>    operation
 %type <coordonnee>      coordonnee
@@ -82,10 +92,7 @@ programme:
     }
 
 instruction:
-    operation  {
-        std::cout << "#-> " << $1 << std::endl;
-    }
-    | build init NL traitements '}' {
+     build init NL traitements '}' {
         std::cout<<"Construire "<<std::endl;
         ville.exec();
     }
@@ -108,7 +115,10 @@ traitements:
     }
 
 traitement:
-         maison {
+        operation  {
+            std::cout << "#-> " << $1 << std::endl;
+        }
+        | maison {
             //construire maison à un emplacement aléatoire
                 std::cout<<"Maison ok"<<std::endl;
                 ville.ajoutMaison("");
@@ -332,7 +342,11 @@ traitement:
 		}
 		| voisin nom expression {
 			ville.voisin($2,$3);
-		}
+		}  
+        
+
+
+
 senshoraire:
     horaire{
         std::cout<<"horaire";

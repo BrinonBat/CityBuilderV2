@@ -22,7 +22,6 @@ public:
 	//constructeur
     Maison(coordonnee c,std::string nom);
     Maison(int r,std::string nom);//r est le rayon du graphe
-	Maison(int r,coordonnee c,std::string nom); //r=rayon autour de c
     coordonnee getCoord()const{return _coord;}
 	void setCoord(coordonnee nouv){_coord=nouv;}
 
@@ -37,6 +36,10 @@ public:
     void setColor(std::string const &s) { _couleur = s; }
     std::string getColor() const { return _couleur; }
 
+    
+
+    
+
     void deplaceRoutes(coordonnee avant,coordonnee apres);
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon
     void ajoutRoute(coordonnee c);//ajoute une route vers ces coordonnées
@@ -47,3 +50,6 @@ public:
 };
 std::ostream & operator<<(std::ostream & os,Maison const & m);
 std::ostream &operator<<(std::ostream &os, coordonnee c);
+
+std::vector<coordonnee> range(int r, coordonnee c); // retourne la liste de toute les coords dans le rayon r autour de c
+int distance(coordonnee c1,coordonnee c2); //retourne la distance entre la maison et les coordonées c1 et c2

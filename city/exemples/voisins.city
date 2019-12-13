@@ -6,9 +6,9 @@ Construire (5){
 	%%test echec sur nom
 	Voisin Manque 3
 	%%test réussite sur indice
-	Voisin 1 2
+	Voisin maison[1] 2
 	%% test echec sur indice
-	Voisin 4 3 
+	Voisin maison[4] 3 
 	%%test echec sur coordonnées
 	Voisin (70,70,70) 3
 	%%test réussite sur coordonnées

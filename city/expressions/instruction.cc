@@ -1,5 +1,6 @@
 #include "instrution.hh"
 #include <sstream>
+#include <ctime>
 bool instruction::estOccupe(coordonnee c){
 	if(existe(c)){
 	    for (auto &i : _maisons)
@@ -12,14 +13,28 @@ bool instruction::estOccupe(coordonnee c){
 	    return false;
 }
 bool instruction::existe(coordonnee c){
-	/*for(auto const & i:_maisons){
-        if(i.getCoord()==c){
-            return true;
+    // test toutes les coordonnées qui sont correcte et return true si c est égale à l'une d'entre elles
+	for(int i=(-_rayon);i<=_rayon;i++){
+        int max = ((-_rayon < (-i - _rayon)) ? (-i - _rayon) : -_rayon);
+        int min = ((_rayon > (-i + _rayon)) ? (-i + _rayon) : _rayon);
+        for (int j = max; j <= min; j++) {
+            int k=-i-j;
+            
+            if(c._x==i && c._y==j && c._z==k){
+                return true;
+            }
         }
     }
+    std::cout<<"Ces coordonnées "<<c<<" sont incorrectes"<<std::endl;
 	return false;
-	*/
-	return true;
+}
+bool instruction::existe(int i){
+    if (i < (int)_maisons.size() && i > -1){
+        return existe(_maisons[i].getCoord());
+    }else{
+        std::cout<<"Erreur l'indice demandé est incorrecte"<<std::endl;
+        return false;
+    }
 }
 
 void instruction::ajoutMaison(std::string s){
@@ -136,7 +151,9 @@ void instruction::deplaceMaison(coordonnee src, coordonnee dst){
 }
 
 void instruction::voisinage(int i){
+    // si l'indice est superieure à 0 et inférieure à la taille du vector
     if(i<(int)_maisons.size() && i>-1){
+        // si il y a des arcs sortants
         if (_maisons[i].getRoute().size()>0){
             std::cout << "voisinage " << i << " - ";
             for (auto const &j : _maisons[i].getRoute()){
@@ -152,18 +169,30 @@ void instruction::voisinage(int i){
     }
 }
 void instruction::voisin(int pos, int i){
-	if ((unsigned int)pos < _maisons.size() && pos > -1){
-		Maison nouv(i,_maisons[pos].getCoord(),"");
-		while(!existe(nouv.getCoord())){
-			detruireMaison(_maisons.size()-1);
-			Maison nouv(i,_maisons[pos].getCoord(),"");
-		}
-		_maisons.push_back(nouv);
+    // si l'indice est superieure à 0 et inférieure à la taille du vector
+    if ((unsigned int)pos < _maisons.size() && pos > -1){
+        std::srand(std::time(nullptr));
+        // liste des coordonnées dans un rayon i de la maison num pos
+        std::vector<coordonnee> rayon = range(i, _maisons[pos].getCoord());
+        // liste des coordonées a exactement 3 de distance et dans le graphe
+        std::vector<coordonnee> coordonneInrange;
+        for (auto const &j : rayon)
+        {
+            if (distance(j, _maisons[i].getCoord()) == 3 && existe(j) && !estOccupe(j))
+            {
+                coordonneInrange.push_back(j);
+            }
+        }
+        // tirage au hasard de coordonées valides parmi coordInrange
+        int m = (int)coordonneInrange.size();
+        int hasard = (rand() % m);
+        //ajoute la maison
+        ajoutMaison(coordonneInrange[hasard],"");
+        //ajoute une route de la maison nuum pos vers cette nouvelle maison
 		ajoutRoute(pos,_maisons.size()-1);
-		ajoutRoute(_maisons.size()-1,pos);
-		std::cout<<_maisons.back()<<std::endl;
+		std::cout<<"La maison numéro "+std::to_string(pos)+" a un nouveau voisin crée "<<_maisons.back()<<std::endl;
 	}else{
-		std::cout<<"numero de maison invalide"<<std::endl;
+		std::cout<<"Erreur numero de maison invalide"<<std::endl;
 	}
 }
 void instruction::voisin(coordonnee c, int i){
@@ -234,7 +263,7 @@ int instruction::indiceMaison(std::string s)
             return i;
         }
     }
-    std::cout << "Erreur Il n'y a pas de maison nommée ainsi " << s << std::endl;
+    std::cout << "Erreur Il n'y a pas de maison nommée ainsi :" << s << std::endl;
     return -1;
 }
 
