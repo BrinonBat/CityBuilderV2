@@ -1,0 +1,16 @@
+Construire (8){
+    Maison M1 (1,-1,0)
+    Maison M2 (2,-1,-1)
+	%%test réussite sur nom
+    Voisin M1 1
+	%%test echec sur nom
+	Voisin Manque 3
+	%%test réussite sur indice
+	Voisin maison[1] 2
+	%% test echec sur indice
+	Voisin maison[4] 3
+	%%test echec sur coordonnées
+	Voisin (70,70,70) 3
+	%%test réussite sur coordonnées
+	Voisin (2,-1,-1) 2
+}
