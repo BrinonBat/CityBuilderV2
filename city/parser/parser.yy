@@ -61,7 +61,7 @@
 %token                  coloriser couleur
 %token<std::string>		nom variable couleurhexa
 
-%token<bool>            occupe vide
+%token		            occupe vide
 %token                  non
 %token                  sicond
 %token                  tantque
@@ -70,7 +70,7 @@
 %token                  sinon
 %token                  fois
 
-
+%type<bool>				condition
 %type <int>             indice expression
 %type<ExpressionPtr>    operation
 %type <coordonnee>      coordonnee
@@ -85,9 +85,6 @@
 programme:
     instruction NL programme
     | instruction{
-        YYACCEPT;
-    }
-    | END NL{
         YYACCEPT;
     }
 
@@ -106,13 +103,8 @@ init:
         }
     }
 traitements:
-    traitement NL traitements{
-
-    }
-    |
-    traitement NL {
-
-    }
+    traitement NL traitements
+    |traitement NL
 
 traitement:
         operation  {
@@ -343,8 +335,19 @@ traitement:
 		| voisin nom expression {
 			ville.voisin($2,$3);
 		}
+		| sicond '(' condition ')' siExe {
+			std::cout<<"si"<<std::endl;
+		   if($3==false) std::cout<<"test";
+		}
 
+condition:
+		occupe coordonnee {
+			$$=ville.estOccupe($2);
+		}
+siExe:
+		  '{' NL traitements '}'{
 
+		 }
 
 
 senshoraire:
