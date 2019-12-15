@@ -19,7 +19,7 @@ bool instruction::existe(coordonnee c){
         int min = ((_rayon > (-i + _rayon)) ? (-i + _rayon) : _rayon);
         for (int j = max; j <= min; j++) {
             int k=-i-j;
-            
+
             if(c._x==i && c._y==j && c._z==k){
                 return true;
             }
@@ -293,4 +293,23 @@ void instruction::affichageVille(){
     }
     std::cout<<"Matrice d'adjacence: nbSommet: "<<_graphe.getnbSommet()<<std::endl;
     _graphe.affichageMatrice();
+}
+
+//verifie si toutes les cases sont occupées dans un rayon donné autour d'une coordonnee c
+bool instruction::estPlein(coordonnee c,int rayon){
+	for(int x(0);x<=rayon;x++){
+		for(int y(0);y<=rayon;y++){
+			for(int z(0);z<=rayon;z++){
+				if(!estOccupe(coordonnee(c._x+x,c._y+y,c._z+z))) return false;
+				if(!estOccupe(coordonnee(c._x+x,c._y+y,c._z-z))) return false;
+				if(!estOccupe(coordonnee(c._x+x,c._y-y,c._z+z))) return false;
+				if(!estOccupe(coordonnee(c._x+x,c._y-y,c._z-z))) return false;
+				if(!estOccupe(coordonnee(c._x-x,c._y+y,c._z+z))) return false;
+				if(!estOccupe(coordonnee(c._x-x,c._y+y,c._z-z))) return false;
+				if(!estOccupe(coordonnee(c._x-x,c._y-y,c._z+z))) return false;
+				if(!estOccupe(coordonnee(c._x-x,c._y-y,c._z-z))) return false;
+			}
+		}
+	}
+	return true;
 }
