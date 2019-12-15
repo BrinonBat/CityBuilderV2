@@ -25,7 +25,6 @@ using token = yy::Parser::token;
 %{
     yylval = lval;
 %}
-fin return token::END;
 
 "Construire"    return token::build;
 "Maison"        return token::maison;
