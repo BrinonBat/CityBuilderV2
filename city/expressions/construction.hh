@@ -9,6 +9,9 @@ struct coordonnee{
     bool operator==(coordonnee const &c)const{
         return (_x==c._x)&&(_y==c._y)&&(_z==c._z);
     }
+	coordonnee()=default;
+	coordonnee(int x,int y,int z):
+		_x(x),_y(y),_z(z){}
 };
 
 class Maison{
@@ -36,9 +39,9 @@ public:
     void setColor(std::string const &s) { _couleur = s; }
     std::string getColor() const { return _couleur; }
 
-    
 
-    
+
+
 
     void deplaceRoutes(coordonnee avant,coordonnee apres);
     bool dejaRelie(coordonnee const & c)const;//test si il y a deja une route vers ces coordonnées,renvoie true si oui false sinon

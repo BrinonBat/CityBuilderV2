@@ -297,9 +297,9 @@ void instruction::affichageVille(){
 
 //verifie si toutes les cases sont occupées dans un rayon donné autour d'une coordonnee c
 bool instruction::estPlein(coordonnee c,int rayon){
-	for(int x(0);x<=rayon,x++){
-		for(int y(0);y<=rayon,y++){
-			for(int z(0);z<=rayon,z++){
+	for(int x(0);x<=rayon;x++){
+		for(int y(0);y<=rayon;y++){
+			for(int z(0);z<=rayon;z++){
 				if(!estOccupe(coordonnee(c._x+x,c._y+y,c._z+z))) return false;
 				if(!estOccupe(coordonnee(c._x+x,c._y+y,c._z-z))) return false;
 				if(!estOccupe(coordonnee(c._x+x,c._y-y,c._z+z))) return false;
