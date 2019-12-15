@@ -1,0 +1,6 @@
+Construire (5){
+	Maison M1 (1,-1,0)
+	Si(occupe (1,0,0)){
+		Maison M2 (2,-1,-1)
+	}
+}

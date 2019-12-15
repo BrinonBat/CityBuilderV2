@@ -12,13 +12,16 @@
 
 int main( int  argc, char* argv[]) {
     Driver driver;
-    std::ifstream fichier("../exemples/boucles.city");
-    instruction ville;
+    std::ifstream fichier("../exemples/011.city");
+
+	prog traiteur;
+//    instruction ville;
+
     Scanner scanner(fichier, std::cout);
     yy::Parser parser(scanner, driver,ville);
 
     parser.parse();
 
-    ville.affichageVille();
+//    ville.affichageVille();
     return 0;
 }
