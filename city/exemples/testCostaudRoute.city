@@ -1,0 +1,27 @@
+Construire {
+	Maison M1 (4,4,0)
+	Route M1 -> (0,1,0)
+	Maison (0,1,0)
+	Detruire M1 -> (0,1,0)
+	Detruire M1 -> (0,0,0)
+	Detruire M1 -> M1
+	Detruire %/ moi j'aimerai y arriver, en /% M1
+	Maison M2 (0,0,0)
+	Route M1 -> M2
+	Route M2 -> M1
+	Route M2 -> M2
+}
+Construire (2){
+	maison M1
+	Route M2 -> M1
+	route M1 -> M2
+	Route M1->M1
+	detruire M1
+
+
+
+
+
+	Detruire M2
+
+}

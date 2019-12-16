@@ -1,0 +1,19 @@
+Construire (30){
+    %%Commentaire
+    Maison
+	Maison sansMaj
+	Maison Majus %%commentaire ensuite
+	Mais%/ haha ! /%on Commente (1,1,1)
+	Maison M1 (1,2,3)
+}
+Construire {
+	Maison M1 (2,3,4)
+	Maison M2 (1,2,3)
+	Maison (2,3,4)
+	
+}
+%/
+Construire(1){
+	Maison (0,0,0)
+}
+/%
