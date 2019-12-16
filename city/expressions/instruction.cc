@@ -20,7 +20,6 @@ bool instruction::existe(coordonnee c){
         int min = ((_rayon > (-i + _rayon)) ? (-i + _rayon) : _rayon);
         for (int j = max; j <= min; j++) {
             int k=-i-j;
-            std::cout<<c<<" "<<i<<" "<<j<<" "<<k<<std::endl;
             if(c._x==i && c._y==j && c._z==k){
                 return true;
             }
@@ -178,11 +177,9 @@ void instruction::voisin(int pos, int i){
         std::vector<coordonnee> coordonneInrange;
         for (auto const &j : rayon)
         {
-            std::cout<<j<<" "<<distance(j, _maisons[pos].getCoord())<<std::endl;
             if (distance(j, _maisons[pos].getCoord()) == i && existe(j) && !estOccupe(j))
             {
                 coordonneInrange.push_back(j);
-                std::cout<<"end "<<coordonneInrange.back()<<std::endl;
             }
         }
         // tirage au hasard de coordonées valides parmi coordInrange
