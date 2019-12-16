@@ -7,10 +7,11 @@ bool instruction::estOccupe(coordonnee c){
 	    {
 	        if (i.getCoord()==c){
 	            return true;
+
 	        }
 	    }
-	}
-	    return false;
+    }
+    return false;
 }
 bool instruction::existe(coordonnee c){
     // test toutes les coordonnées qui sont correcte et return true si c est égale à l'une d'entre elles
@@ -19,7 +20,7 @@ bool instruction::existe(coordonnee c){
         int min = ((_rayon > (-i + _rayon)) ? (-i + _rayon) : _rayon);
         for (int j = max; j <= min; j++) {
             int k=-i-j;
-
+            std::cout<<c<<" "<<i<<" "<<j<<" "<<k<<std::endl;
             if(c._x==i && c._y==j && c._z==k){
                 return true;
             }
@@ -47,11 +48,10 @@ void instruction::ajoutMaison(std::string s){
 	if(!estPris){
 		//ajout de la maison & ajout du nom
         Maison m(_rayon,s);
-        if (!estOccupe(m.getCoord()))
-        {
-            _nbsommet++;
-            _maisons.push_back(m);
-        }
+        while(!estOccupe(m.getCoord())){
+            Maison m(_rayon,s);
+        }_nbsommet++;
+        _maisons.push_back(m);
     }else
 		std::cout<<"Erreur le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
 }
@@ -155,7 +155,7 @@ void instruction::voisinage(int i){
     if(i<(int)_maisons.size() && i>-1){
         // si il y a des arcs sortants
         if (_maisons[i].getRoute().size()>0){
-            std::cout << "voisinage " << i << " - ";
+            std::cout << "voisinage " << i+1 << " - ";
             for (auto const &j : _maisons[i].getRoute()){
                 std::cout<<j<<" distance relative -> ";
 				std::cout<<((	(std::abs(_maisons[i].getCoord()._x - j._x))
@@ -164,7 +164,7 @@ void instruction::voisinage(int i){
 							) / 2) <<std::endl;
             }
         }else{
-            std::cout<<"La maison "+std::to_string(i)+" n'a pas de voisins"<<std::endl;
+            std::cout<<"La maison "+std::to_string(i+1)+" n'a pas de voisins"<<std::endl;
         }
     }
 }
@@ -178,9 +178,11 @@ void instruction::voisin(int pos, int i){
         std::vector<coordonnee> coordonneInrange;
         for (auto const &j : rayon)
         {
-            if (distance(j, _maisons[i].getCoord()) == 3 && existe(j) && !estOccupe(j))
+            std::cout<<j<<" "<<distance(j, _maisons[pos].getCoord())<<std::endl;
+            if (distance(j, _maisons[pos].getCoord()) == i && existe(j) && !estOccupe(j))
             {
                 coordonneInrange.push_back(j);
+                std::cout<<"end "<<coordonneInrange.back()<<std::endl;
             }
         }
         // tirage au hasard de coordonées valides parmi coordInrange

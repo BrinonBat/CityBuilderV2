@@ -74,7 +74,6 @@
 %type<ExpressionPtr>    operation
 %type <coordonnee>      coordonnee
 %type<bool>             senshoraire
-%type<std::string>      traitement traitements
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
