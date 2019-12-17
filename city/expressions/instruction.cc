@@ -4,9 +4,14 @@
 
 void instruction::setRayon(unsigned int r){
     _rayon=(int)r;
-    for(auto & i: _maisons){
-        if(!existe(i.getCoord())){
-            detruireMaison(indiceMaison(i.getCoord()));
+    for ( int i=0 ;i<(int)_maisons.size();i++)
+    {
+        if (i < (int)_maisons.size())
+        {
+            if (!existe(_maisons[i].getCoord()) ){
+                detruireMaison(i);
+            }
+        
         }
     }
 }
@@ -24,8 +29,18 @@ bool instruction::estOccupe(coordonnee c){
     return false;
 }
 bool instruction::existe(coordonnee c){
-    // test toutes les coordonnées qui sont correcte et return true si c est égale à l'une d'entre elles
-	for(int i=(-_rayon);i<=_rayon;i++){
+    // on boucle sur toutes les coordonnées correctes qui sont dans le rayon du graphe
+    /*
+        Equivalent de pour x de -rayon à rayon
+                        pour y de -rayon à rayon
+                            pour z de -rayon à rayon
+                                si x+y+z=0 && c = (x,y,z)
+                                    return true
+        c'est pas efficace car il y a que un z correcte donc on calcule direct le bon z 
+        calcule ici https://www.redblobgames.com/grids/hexagons/#range
+    */
+    for(int i=(-_rayon);i<=_rayon;i++){
+
         int max = ((-_rayon < (-i - _rayon)) ? (-i - _rayon) : -_rayon);
         int min = ((_rayon > (-i + _rayon)) ? (-i + _rayon) : _rayon);
         for (int j = max; j <= min; j++) {
@@ -57,9 +72,10 @@ void instruction::ajoutMaison(std::string s){
 	if(!estPris){
 		//ajout de la maison & ajout du nom
         Maison m(_rayon,s);
-        while(!estOccupe(m.getCoord())){
+        while(estOccupe(m.getCoord())){
             Maison n(_rayon,s);
             m=n;
+            std::cout<<m<<std::endl;
         }
         std::cout<<m.getCoord()<<std::endl;
         _nbsommet++;
@@ -121,7 +137,7 @@ void instruction::ajoutRoute(int src, int dst){
 }
 
 void instruction::detruireMaison(int i){
-	if((unsigned int)i<=_maisons.size()){
+	if((unsigned int)i<_maisons.size() && i>-1){
 		//suppression des routes sortantes
 		_maisons[i].clearRoutes();
 		//suppression des routes entrantes
@@ -130,6 +146,8 @@ void instruction::detruireMaison(int i){
 		}
 		//suppression de la maison
 		_maisons.erase(_maisons.begin()+(i));
+        _nbsommet--;
+        _graphe.setnbSommet(_nbsommet);
 	}
 }
 

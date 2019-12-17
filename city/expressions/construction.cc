@@ -6,6 +6,7 @@
 
 std::vector<coordonnee> range(int r,coordonnee c)
 {
+    //renvoie les liste des positions qui sont dans un rayons r de c
     std::vector<coordonnee> res;
      for (int i = -r+c._x; i <= r+c._x; i++)
     {
@@ -23,10 +24,12 @@ std::vector<coordonnee> range(int r,coordonnee c)
 
 Maison::Maison(int r,std::string nom):_orientation(90){
     std::srand(std::time(nullptr));
+    // prend des coordonées au hasard parmi des coordonées correct
     auto ra =range(r,coordonnee(0,0,0));
-    _coord._x = (rand() % (r * 2) + 1) - r;
-    _coord._z = (rand() % (r * 2) + 1) - r;
-    _coord._y = -_coord._x-_coord._z;
+    int hasard ;
+    hasard = rand() % (int)ra.size();
+    _coord=ra[hasard];
+    
     if(nom!=""){ _nom=nom;}
 }
 Maison::Maison(coordonnee c, std::string nom) : _coord(c), _orientation(90) {
@@ -86,8 +89,8 @@ void Maison::ajoutRoute(coordonnee c){
     }
 }
 void Maison::retireRoute(coordonnee c){
-	auto it=std::find(_routes.begin(),_routes.end(),c);
-	if(it!=_routes.end()){
+    auto it=std::find(_routes.begin(),_routes.end(),c);
+    if(it!=_routes.end()){
 		_routes.erase(it);
 	}
 }

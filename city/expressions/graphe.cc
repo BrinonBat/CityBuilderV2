@@ -12,7 +12,7 @@ Graphe::~Graphe(){
 void Graphe::initMatrice(){
   for (int i=0; i<nbSommet; ++i){
     for (int j=0; j<nbSommet; ++j){
-      if (matrice[i][j]!=1 &&(matrice[i][j]!=0))
+      if ((matrice[i][j]!=0))
         matrice[i][j]=0;
     }
   }
@@ -55,5 +55,3 @@ void Graphe::affichageMatrice(){
     std::cout << std::endl;
   }
 }
-
-

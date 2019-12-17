@@ -12,6 +12,11 @@ struct coordonnee{
     bool operator!=(coordonnee const&c)const{
         return !((*this)==c);
     }
+    void operator=(coordonnee const &c){
+        _x=c._x;
+        _y=c._y;
+        _z=c._z;
+    }
 	coordonnee()=default;
 	coordonnee(int x,int y,int z):
 		_x(x),_y(y),_z(z){}
@@ -52,6 +57,13 @@ public:
 	void clearRoutes(){_routes.clear();}
 	void retireRoute(coordonnee c);//supprime une route vers ces coordonnées
     bool operator==(Maison const & m);
+    void operator=(Maison const & m){
+        _coord=m._coord;
+        _routes=m._routes;
+        _nom=m._nom;
+        _couleur=m._couleur;
+        _orientation=m._orientation;
+    }
     void sortieflux(std::ostream & os)const;
 };
 std::ostream & operator<<(std::ostream & os,Maison const & m);
