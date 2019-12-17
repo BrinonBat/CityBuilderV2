@@ -189,7 +189,7 @@ void instruction::voisin(int pos, int i){
         ajoutMaison(coordonneInrange[hasard],"");
         //ajoute une route de la maison nuum pos vers cette nouvelle maison
 		ajoutRoute(pos,_maisons.size()-1);
-		std::cout<<"La maison numéro "+std::to_string(pos)+" a un nouveau voisin crée "<<_maisons.back()<<std::endl;
+		std::cout<<"La maison numéro "+std::to_string(pos+1)+" a un nouveau voisin crée "<<_maisons.back()<<std::endl;
 	}else{
 		std::cout<<"Erreur numero de maison invalide"<<std::endl;
 	}
@@ -286,7 +286,7 @@ void instruction::affichageVille(){
     std::cout << "NBSommets: " << std::to_string(_nbsommet) << std::endl;
     std::cout<<"Maisons: "<<std::endl;
     for(auto const & i:_maisons){
-        std::cout<<"indice: "<<indiceMaison(i.getCoord())<<" ";
+        std::cout<<"Num: "<<indiceMaison(i.getCoord())+1<<" ";
         i.sortieflux(std::cout);
         std::cout<<std::endl;
     }
