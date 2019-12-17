@@ -1,6 +1,16 @@
 #include "instrution.hh"
 #include <sstream>
 #include <ctime>
+
+void instruction::setRayon(unsigned int r){
+    _rayon=(int)r;
+    for(auto & i: _maisons){
+        if(!existe(i.getCoord())){
+            detruireMaison(indiceMaison(i.getCoord()));
+        }
+    }
+}
+
 bool instruction::estOccupe(coordonnee c){
 	if(existe(c)){
 	    for (auto &i : _maisons)
@@ -48,8 +58,11 @@ void instruction::ajoutMaison(std::string s){
 		//ajout de la maison & ajout du nom
         Maison m(_rayon,s);
         while(!estOccupe(m.getCoord())){
-            Maison m(_rayon,s);
-        }_nbsommet++;
+            Maison n(_rayon,s);
+            m=n;
+        }
+        std::cout<<m.getCoord()<<std::endl;
+        _nbsommet++;
         _maisons.push_back(m);
     }else
 		std::cout<<"Erreur le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
