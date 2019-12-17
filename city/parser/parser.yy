@@ -74,7 +74,6 @@
 %type<ExpressionPtr>    operation
 %type <coordonnee>      coordonnee
 %type<bool>             senshoraire
-%type<std::string>      traitement traitements
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -88,7 +87,11 @@ programme:
     }
 instruction:
      build init NL traitements '}' {
-        std::cout<<"fin de la construction"<<std::endl;
+        std::cout<<"Fin de la construction"<<std::endl;
+        ville.exec();
+    }
+    | build init NL traitements '}' NL {
+        std::cout<<"Fin de la construction"<<std::endl;
         ville.exec();
     }
 init:
@@ -106,7 +109,8 @@ traitements:
     |traitement NL
 
 traitement:
-        operation  {std::cout << "#-> " << $1 << std::endl;}
+        %empty
+        | operation  {std::cout << "#-> " << $1 << std::endl;}
 		| maison maisTrait
         | route routeTrait
         | com {std::cout<<"----------------------------------------------Commentaire"<<std::endl;}

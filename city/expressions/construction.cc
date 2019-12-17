@@ -4,10 +4,28 @@
 #include<ctime>
 #include <iostream>
 
+std::vector<coordonnee> range(int r,coordonnee c)
+{
+    std::vector<coordonnee> res;
+     for (int i = -r+c._x; i <= r+c._x; i++)
+    {
+        int max = ((-r < (-i - r)) ? (-i - r) : -r);
+        int min = ((r > (-i + r)) ? (-i + r) : r);
+        for (int j = max+c._y; j <= min+c._y; j++)
+        {
+            int k = -i - j;
+            coordonnee c;c._x=i;c._y=j;c._z=k;
+            res.push_back(c);
+        }
+    }
+    return res;
+}
+
 Maison::Maison(int r,std::string nom):_orientation(90){
     std::srand(std::time(nullptr));
-    _coord._x = (rand() % (r * 2) + 1) - 5;
-    _coord._z = (rand() % (r * 2) + 1) - 5;
+    auto ra =range(r,coordonnee(0,0,0));
+    _coord._x = (rand() % (r * 2) + 1) - r;
+    _coord._z = (rand() % (r * 2) + 1) - r;
     _coord._y = -_coord._x-_coord._z;
     if(nom!=""){ _nom=nom;}
 }
@@ -80,21 +98,4 @@ void Maison::retireRoute(coordonnee c){
 
 int distance(coordonnee c1,coordonnee c2){
     return (std::abs(c2._x - c1._x)+(std::abs(c2._y - c1._y))+(std::abs(c2._z - c1._z))) / 2;
-}
-
-std::vector<coordonnee> range(int r,coordonnee c)
-{
-    std::vector<coordonnee> res;
-     for (int i = -r+c._x; i <= r+c._x; i++)
-    {
-        int max = ((-r < (-i - r)) ? (-i - r) : -r);
-        int min = ((r > (-i + r)) ? (-i + r) : r);
-        for (int j = max+c._y; j <= min+c._y; j++)
-        {
-            int k = -i - j;
-            coordonnee c;c._x=i;c._y=j;c._z=k;
-            res.push_back(c);
-        }
-    }
-    return res;
 }

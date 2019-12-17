@@ -9,6 +9,9 @@ struct coordonnee{
     bool operator==(coordonnee const &c)const{
         return (_x==c._x)&&(_y==c._y)&&(_z==c._z);
     }
+    bool operator!=(coordonnee const&c)const{
+        return !((*this)==c);
+    }
 	coordonnee()=default;
 	coordonnee(int x,int y,int z):
 		_x(x),_y(y),_z(z){}
