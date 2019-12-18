@@ -378,7 +378,7 @@ senshoraire:
     }
 
 indice:
-    indmaison '[' NUMBER ']' {
+    indmaison '[' expression ']' {
         $$=$3-1;
     }
 

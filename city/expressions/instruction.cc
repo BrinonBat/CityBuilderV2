@@ -268,19 +268,26 @@ void instruction::coloriser(int i,std::string coul){
 
 void instruction::afficheCouleur(int i){
     if ((unsigned int)i < _maisons.size() && i > -1){
-        std::string rouge, vert, bleu;
-        rouge = _maisons[i].getColor().substr(1, 2);
-        vert = _maisons[i].getColor().substr(3, 2);
-        bleu = _maisons[i].getColor().substr(5, 2);
-        unsigned int r,v,b;
-        std::stringstream ss;
-        ss << std::hex<<rouge;
-        ss >> r;ss.clear();
-        ss << std::hex<<vert;
-        ss >> v;ss.clear();
-        ss << std::hex << bleu;
-        ss >> b;
-        std::cout << "La couleur de la Maison["+std::to_string(i+1)+"] est ("+std::to_string(r)+","+std::to_string(v)+","+std::to_string(b)+")" << std::endl;
+        if (!_maisons[i].getColor().empty())
+        {
+            std::string rouge, vert, bleu;
+            rouge = _maisons[i].getColor().substr(1, 2);
+            vert = _maisons[i].getColor().substr(3, 2);
+            bleu = _maisons[i].getColor().substr(5, 2);
+            unsigned int r, v, b;
+            std::stringstream ss;
+            ss << std::hex << rouge;
+            ss >> r;
+            ss.clear();
+            ss << std::hex << vert;
+            ss >> v;
+            ss.clear();
+            ss << std::hex << bleu;
+            ss >> b;
+            std::cout << "La couleur de la Maison[" + std::to_string(i + 1) + "] est (" + std::to_string(r) + "," + std::to_string(v) + "," + std::to_string(b) + ")" << std::endl;
+        }else{
+            std::cout<<"Pas de couleur spécifié ";
+        }
     }
     else{
         std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
@@ -340,7 +347,7 @@ void instruction::affichageVille(){
         std::cout << "Maisons: " << std::endl;
         for (auto const &i : _maisons)
         {
-            std::cout << "Num: " << indiceMaison(i.getCoord()) + 1 << " ";
+            std::cout << "Num: " << indiceMaison(i.getCoord()) + 1 << " ";afficheCouleur(indiceMaison(i.getCoord()));
             i.sortieflux(std::cout);
             std::cout << std::endl;
         }
