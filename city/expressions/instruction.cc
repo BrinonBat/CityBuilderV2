@@ -15,6 +15,7 @@ void instruction::setRayon(int r){
             {
                 if (!existe(_maisons[i].getCoord()))
                 {
+                    std::cout<<"Le nouveau rayon impose une destruction de la maison situé "<<_maisons[i].getCoord()<<std::endl;
                     detruireMaison(i);
                 }
             }
