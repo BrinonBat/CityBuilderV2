@@ -61,7 +61,11 @@ bool Maison::dejaRelie(coordonnee const &c)const{
     return false;
 }
 void Maison::sortieflux(std::ostream & os)const{
-    os<<"Nom: "+_nom+" Coordonées: "<<_coord<<std::endl;
+    os<<"Nom: "+_nom+" Coordonées: "<<_coord;
+    if(_orientation){
+        os<<" orientation: "<<_orientation<<"°";
+    }
+    std::cout<<std::endl;
     if(_routes.size()>0){
         os<<"\t\tRoutes:\n";
         os << "\t\t\t";

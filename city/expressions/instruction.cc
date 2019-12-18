@@ -7,6 +7,7 @@ void instruction::setRayon(int r){
         std::cerr<<"Erreur taille incorrecte: "<<r<<std::endl;
     }
     else{
+        std::cout<<" Rayon set à "<<r<<std::endl;
         _rayon = (int)r;
 
         for (int i = 0; i < (int)_maisons.size(); i++)
@@ -75,7 +76,6 @@ void instruction::ajoutMaison(std::string s){
 	for(auto &m : _maisons){
 		if(m.getNom()==s && !m.getNom().empty())estPris=true;
 	}
-    std::cout<<std::endl;
 	if(!estPris){
 		//ajout de la maison & ajout du nom
         Maison m(_rayon,s);
@@ -101,7 +101,6 @@ void instruction::ajoutMaison(coordonnee c,std::string s){
             if (m.getNom() == s && !m.getNom().empty())
                 estPris = true;
         }
-        std::cout << std::endl;
         if (!estPris)
         {
             //ajout de la maison & ajout du nom
@@ -120,13 +119,16 @@ void instruction::ajoutMaison(coordonnee c,std::string s){
 void instruction::tournerMaison(int i, bool horaire){
     if (i < (int)_maisons.size() && i > -1)
     {
+        std::cout<<" Tourner maison "<<i+1<<" du sens";
         if (horaire)
         {
             _maisons[i].setOrientation(_maisons[i].getOrientation() + 60);
+            std::cout << " horaire"<<std::endl;
         }
         else
         {
             _maisons[i].setOrientation(_maisons[i].getOrientation() - 60);
+            std::cout << " anti-horaire" << std::endl;
         }
     } else{
         std::cout << "Erreur la maison d'entrée à tourner n'existe pas " << std::endl;
@@ -136,6 +138,7 @@ void instruction::tournerMaison(int i, bool horaire){
 void instruction::orienterMaison(int i,int r){
     if(i<(int)_maisons.size() && i>-1){
         _maisons[i].setOrientation(r);
+        std::cout << "Orienter maison "<<i+1<<" de "<<r<<"°" << std::endl;
     }else{
         std::cout << "Erreur la maison d'entrée à orienter n'existe pas " << std::endl;
     }
@@ -182,7 +185,7 @@ void instruction::deplaceMaison(int src, coordonnee dst){
 }
 
 void instruction::deplaceMaison(coordonnee src, coordonnee dst){
-	if(!estOccupe(dst)){
+	if(!estOccupe(dst) && existe(dst)){
 		//redirection des routes
 		for(auto &m : _maisons){
 			m.deplaceRoutes(src,dst);
@@ -247,19 +250,36 @@ void instruction::voisin(std::string s, int i){
 }
 
 std::string instruction::intTohexa(int r,int v, int b){
-    std::stringstream ss;
-    ss << std::hex << r;
-    ss << std::hex << v;
-    ss << std::hex << b;
-
-    std::string s(ss.str());
-    std::cout<<"#"+s<<std::endl;
-    return "#"+s;
+    if(r>255 || v>255 || b>255 || r<0 || b<0 || v<0){
+        std::cerr<<" Erreur couleur rentrée incorrecte non comprise dans [0,255] "<<std::endl;
+        return "";
+    }
+    else
+    {
+        std::stringstream ss;
+        std::string s("");
+        std::string s1;
+        ss << std::hex << r;
+        ss >> s1;
+        // si conversion hexa renvoie qu'un seul caractère on rajoute 0 devant sinon on renvoie tel quel
+        (s1.length() < 2) ? s += "0" + s1 : s += s1;
+        //on clear le stringstream pour le remettre  zéro si cela s'ajoute à celui mis précédemment 
+        ss.clear();
+        ss << std::hex << v;
+        ss >> s1;
+        (s1.length() < 2) ? s += "0" + s1 : s += s1;
+        ss.clear();
+        ss << std::hex << b;
+        ss >> s1;
+        (s1.length() < 2) ? s += "0" + s1 : s += s1;
+        return "#" + s;
+}
 }
 void instruction::coloriser(int i,std::string coul){
     if((unsigned int)i<_maisons.size()&& i>-1){
+        std::cout<<"Colorisation de la maison "<<i+1<<" "+coul<<std::endl;
         _maisons[i].setColor(coul);
-        std::cout<<"Colorisation de la maison"<<std::endl;
+        
     }else{
         std::cout << "Erreur La maison demandé n'existe pas " << std::endl;
     }
