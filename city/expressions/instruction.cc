@@ -2,16 +2,22 @@
 #include <sstream>
 #include <ctime>
 
-void instruction::setRayon(unsigned int r){
-    _rayon=(int)r;
-    for ( int i=0 ;i<(int)_maisons.size();i++)
-    {
-        if (i < (int)_maisons.size())
+void instruction::setRayon(int r){
+    if(r<0){
+        std::cerr<<"Erreur taille incorrecte: "<<r<<std::endl;
+    }
+    else{
+        _rayon = (int)r;
+
+        for (int i = 0; i < (int)_maisons.size(); i++)
         {
-            if (!existe(_maisons[i].getCoord()) ){
-                detruireMaison(i);
+            if (i < (int)_maisons.size())
+            {
+                if (!existe(_maisons[i].getCoord()))
+                {
+                    detruireMaison(i);
+                }
             }
-        
         }
     }
 }
@@ -86,23 +92,29 @@ void instruction::ajoutMaison(std::string s){
 
 void instruction::ajoutMaison(coordonnee c,std::string s){
 	//verification que le nom n'est pas pris
-	bool estPris(false);
-	for(auto &m : _maisons){
-        if (m.getNom() == s && !m.getNom().empty())
-            estPris = true;
-    }
-    std::cout << std::endl;
-    if(!estPris){
-		//ajout de la maison & ajout du nom
-        if (!estOccupe(c)) {
-            _nbsommet++;
-            _maisons.push_back(Maison(c,s));
+    if (existe(c))
+    {
+        bool estPris(false);
+        for (auto &m : _maisons)
+        {
+            if (m.getNom() == s && !m.getNom().empty())
+                estPris = true;
         }
-        else{
+        std::cout << std::endl;
+        if (!estPris)
+        {
+            //ajout de la maison & ajout du nom
+            if (!estOccupe(c))
+            {
+                _nbsommet++;
+                _maisons.push_back(Maison(c, s));
+            }
+            else{
             std::cout << "Erreur Cet emplacement " << c << " est déjà pris" << std::endl;
         }
     }else
 		std::cout<<"Erreur le nom est déjà pris! annulation de la creation de la maison "<<s<<std::endl;
+    }
 }
 void instruction::tournerMaison(int i, bool horaire){
     if (i < (int)_maisons.size() && i > -1)
@@ -298,31 +310,42 @@ int instruction::indiceMaison(std::string s)
 }
 
 void instruction::exec(){
-    if(!_estConstruit){
-         _graphe.setnbSommet((int)_maisons.size());
-        _graphe.initMatrice();
-        for(auto const & i:_maisons){
-            for(auto const j:i.getRoute()){
-                _graphe.ajoutArc(indiceMaison(i.getCoord()),indiceMaison(j));
+        if (!_estConstruit)
+        {
+            _graphe.setnbSommet((int)_maisons.size());
+            _graphe.initMatrice();
+            for (auto const &i : _maisons)
+            {
+                for (auto const j : i.getRoute())
+                {
+                    _graphe.ajoutArc(indiceMaison(i.getCoord()), indiceMaison(j));
+                }
             }
+            _estConstruit = true;
         }
-        _estConstruit=true;
-    }else{
-        _graphe.initMatrice();
-    }
+        else
+        {
+            _graphe.setnbSommet((int)_maisons.size());
+            _graphe.initMatrice();
+        }
+    
 }
 
 void instruction::affichageVille(){
-    std::cout<<"Rayon: "<<std::to_string(_rayon)<<std::endl;
-    std::cout << "NBSommets: " << std::to_string(_nbsommet) << std::endl;
-    std::cout<<"Maisons: "<<std::endl;
-    for(auto const & i:_maisons){
-        std::cout<<"Num: "<<indiceMaison(i.getCoord())+1<<" ";
-        i.sortieflux(std::cout);
-        std::cout<<std::endl;
+    if (estConstruit())
+    {
+        std::cout << "Rayon: " << std::to_string(_rayon) << std::endl;
+        std::cout << "NBSommets: " << std::to_string(_nbsommet) << std::endl;
+        std::cout << "Maisons: " << std::endl;
+        for (auto const &i : _maisons)
+        {
+            std::cout << "Num: " << indiceMaison(i.getCoord()) + 1 << " ";
+            i.sortieflux(std::cout);
+            std::cout << std::endl;
+        }
+        std::cout << "Matrice d'adjacence: nbSommet: " << _graphe.getnbSommet() << std::endl;
+        _graphe.affichageMatrice();
     }
-    std::cout<<"Matrice d'adjacence: nbSommet: "<<_graphe.getnbSommet()<<std::endl;
-    _graphe.affichageMatrice();
 }
 
 //verifie si toutes les cases sont occupées dans un rayon donné autour d'une coordonnee c

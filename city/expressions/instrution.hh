@@ -19,7 +19,7 @@ public:
     //accesseurs
     Graphe getGraphe()const{return _graphe;}
     int getRayon()const{return _rayon;}
-    void setRayon(unsigned int r);//change _rayon et supprimme route et maison qui sont hors rayon
+    void setRayon( int r);//change _rayon et supprimme route et maison qui sont hors rayon
     int getNbsommet()const{return _nbsommet;}
     std::vector<Maison> getMaisons()const{return _maisons;}
 	int indiceMaison(coordonnee c);//retourne l'indice de la maison situé aux coordonée données

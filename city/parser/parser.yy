@@ -85,23 +85,23 @@ programme:
     | instruction{
         YYACCEPT;
     }
+    | NL programme
+    | %empty {
+        YYACCEPT;
+    }
+
 instruction:
      build init NL traitements '}' {
         std::cout<<"Fin de la construction"<<std::endl;
         ville.exec();
     }
-    | build init NL traitements '}' NL {
-        std::cout<<"Fin de la construction"<<std::endl;
-        ville.exec();
-    }
 init:
     '(' expression ')' '{'{
-        ville.setRayon($2);
+            ville.setRayon($2);
+        
     }
     | '{' {
-        if(!ville.estConstruit()){
             ville.setRayon(5);
-        }
     }
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 traitements:
