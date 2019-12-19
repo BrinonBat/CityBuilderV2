@@ -85,23 +85,23 @@ programme:
     | instruction{
         YYACCEPT;
     }
+    | NL programme
+    | %empty {
+        YYACCEPT;
+    }
+
 instruction:
      build init NL traitements '}' {
         std::cout<<"Fin de la construction"<<std::endl;
         ville.exec();
     }
-    | build init NL traitements '}' NL {
-        std::cout<<"Fin de la construction"<<std::endl;
-        ville.exec();
-    }
 init:
     '(' expression ')' '{'{
-        ville.setRayon($2);
+            ville.setRayon($2);
+        
     }
     | '{' {
-        if(!ville.estConstruit()){
             ville.setRayon(5);
-        }
     }
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 traitements:
@@ -120,7 +120,7 @@ traitement:
         | destroy destroyTrait
         | deplacer deplacerTrait
         | position indice {
-            std::cout<<"Position maison["<<$2<<"] ";
+            std::cout<<"Position maison["<<$2+1<<"] ";
             std::cout<<ville.getMaisons()[$2].getCoord()<<std::endl;
         }
         | position nom {
@@ -136,13 +136,13 @@ traitement:
 maisTrait:
 		%empty {
 		//construire maison à un emplacement aléatoire
-			std::cout<<"Maison ok"<<std::endl;
+			std::cout<<"Maison placée aléatoirement ";
 			ville.ajoutMaison("");
 		}
 
 		| nom {
 		//construire maison à un emplacement aléatoire
-			std::cout<<"Maison nommée "<<std::endl;
+			std::cout<<"Maison nommée placée aléatoirement "<<std::endl;
 			ville.ajoutMaison($1);
 		}
 		| coordonnee {
@@ -163,27 +163,27 @@ routeTrait:
 
 	}
 	| coordonnee arrow indice  {
-		std::cout<<"Route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Route "<<$1<<" -> "<<$3+1<<std::endl;
 		ville.ajoutRoute(ville.indiceMaison($1),$3);
 
 	}
 	| indice arrow indice  {
-		std::cout<<"Route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Route "<<$1+1<<" -> "<<$3+1<<std::endl;
 		ville.ajoutRoute($1,$3);
 
 	}
 	| indice arrow coordonnee  {
-		std::cout<<"Route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Route "<<$1+1<<" -> "<<$3<<std::endl;
 		ville.ajoutRoute($1,ville.indiceMaison($3));
 
 	}
 	| indice arrow nom  {
-		std::cout<<"Route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Route "<<$1+1<<" -> "<<$3<<std::endl;
 		ville.ajoutRoute($1,ville.indiceMaison($3));
 
 	}
 	| nom arrow indice  {
-		std::cout<<"Route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Route "<<$1<<" -> "<<$3+1<<std::endl;
 		ville.ajoutRoute(ville.indiceMaison($1),$3);
 
 	}
@@ -205,44 +205,38 @@ routeTrait:
 
 turnTrait:
 	coordonnee senshoraire {
-   		std::cout<<"Tourner"<<std::endl;
    		ville.tournerMaison(ville.indiceMaison($1),$2);
    	}
    	|indice senshoraire {
-   		std::cout<<"Tourner"<<std::endl;
    		ville.tournerMaison($1,$2);
    	}
    	| nom senshoraire {
-   		std::cout<<"Tourner"<<std::endl;
    		ville.tournerMaison(ville.indiceMaison($1),$2);
    	}
 
 orienterTrait:
 	coordonnee expression degree {
-		std::cout<<"Orienter"<<std::endl;
 		ville.orienterMaison(ville.indiceMaison($1),$2);
 	}
 	| nom expression degree {
-		std::cout<<"Orienter"<<std::endl;
 		ville.orienterMaison(ville.indiceMaison($1),$2);
 	}
 	| indice expression degree {
-		std::cout<<"Orienter"<<std::endl;
 		ville.orienterMaison($1,$2);
 	}
 
 orientationTrait:
 	coordonnee {
 		std::cout<<"Orientation de Maison"<<$1<<" - "
-			<<ville.getMaisons()[ville.indiceMaison($1)].getOrientation()<<std::endl;
+			<<ville.getMaisons()[ville.indiceMaison($1)].getOrientation()<<"°"<<std::endl;
 	}
 	|nom {
 		std::cout<<"Orientation de Maison"<<$1<<" - "
-			<<ville.getMaisons()[ville.indiceMaison($1)].getOrientation()<<std::endl;
+			<<ville.getMaisons()[ville.indiceMaison($1)].getOrientation()<<"°"<<std::endl;
 	}
 	| indice {
 		std::cout<<"Orientation de Maison"<<$1<<" - "
-			<<ville.getMaisons()[$1].getOrientation()<<std::endl;
+			<<ville.getMaisons()[$1].getOrientation()<<"°"<<std::endl;
 	}
 
 destroyTrait:
@@ -251,7 +245,7 @@ destroyTrait:
 	   ville.detruireMaison(ville.indiceMaison($1));
    }
    | indice {
-	   std::cout<<"Detruire maison "<<$1<<std::endl;
+	   std::cout<<"Detruire maison "<<$1+1<<std::endl;
 	   ville.detruireMaison($1);
    }
    | nom {
@@ -263,23 +257,23 @@ destroyTrait:
 	   ville.detruireRoute(ville.indiceMaison($1),ville.indiceMaison($3));
    }
    | coordonnee arrow indice {
-		std::cout<<"Detruire route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Detruire route "<<$1<<" -> "<<$3+1<<std::endl;
 	   ville.detruireRoute(ville.indiceMaison($1),$3);
    }
    | indice arrow coordonnee {
-		std::cout<<"Detruire route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Detruire route "<<$1+1<<" -> "<<$3<<std::endl;
 	   ville.detruireRoute($1,ville.indiceMaison($3));
    }
    | indice arrow indice {
-		std::cout<<"Detruire route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Detruire route "<<$1+1<<" -> "<<$3+1<<std::endl;
 	   ville.detruireRoute($1,$3);
    }
    |  indice arrow nom {
-		std::cout<<"Detruire route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Detruire route "<<$1+1<<" -> "<<$3<<std::endl;
 	   ville.detruireRoute($1,ville.indiceMaison($3));
    }
    |  nom arrow indice {
-		std::cout<<"Detruire route "<<$1<<" -> "<<$3<<std::endl;
+		std::cout<<"Detruire route "<<$1<<" -> "<<$3+1<<std::endl;
 	   ville.detruireRoute(ville.indiceMaison($1),$3);
    }
    |  nom arrow nom {
@@ -300,7 +294,7 @@ deplacerTrait:
   	ville.deplaceMaison($1,$3);
   }
   |indice arrow coordonnee {
-  	std::cout<<"Deplacer maison "<<$1<<" -> "<<$3<<std::endl;
+  	std::cout<<"Deplacer maison "<<$1+1<<" -> "<<$3<<std::endl;
   	ville.deplaceMaison($1,$3);
   }
   |nom arrow coordonnee {
@@ -369,16 +363,14 @@ voisinTrait:
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 senshoraire:
     horaire{
-        std::cout<<"horaire";
         $$=true;
     }
     | '!' horaire{
-        std::cout<<"!horaire";
         $$=false;
     }
 
 indice:
-    indmaison '[' NUMBER ']' {
+    indmaison '[' expression ']' {
         $$=$3-1;
     }
 
